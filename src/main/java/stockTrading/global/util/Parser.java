@@ -1,5 +1,7 @@
 package stockTrading.global.util;
 
-public interface Parser {
-    String[] parse(String input);
+import java.util.List;
+
+public interface Parser<T> {
+    List<T> parse(String input);
 }
