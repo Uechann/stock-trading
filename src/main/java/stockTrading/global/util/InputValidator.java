@@ -1,6 +1,7 @@
 package stockTrading.global.util;
 
 import static stockTrading.global.Exception.ErrorMessage.*;
+import static stockTrading.global.constant.Pattern.ACCOUNT_FUNDS_REGEX;
 import static stockTrading.global.constant.Pattern.SYMBOL_INPUT_REGEX;
 
 public class InputValidator {
@@ -16,7 +17,19 @@ public class InputValidator {
         validateSymbolPattern(symbolInput);
     }
 
+    // 자금 검증
+    public static void validateFunds(String fundsInput) {
+        validateEmptyOrBlank(fundsInput);
+        validateAccountFundsPattern(fundsInput);
+    }
+
     // ============== private method =================
+
+    private static void validateAccountFundsPattern(String fundsInput) {
+        if (!fundsInput.matches(ACCOUNT_FUNDS_REGEX)) {
+            throw new IllegalArgumentException(ACCOUNT_FUNDS_PATTERN_NOT_MATCH.getMessage());
+        }
+    }
 
     private static void validateSymbolPattern(String symbolInput) {
         if (!symbolInput.matches(SYMBOL_INPUT_REGEX)) {

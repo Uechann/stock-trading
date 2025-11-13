@@ -33,6 +33,7 @@ public class InputValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"", " ", "abc123", "asdf"})
+    @DisplayName("자금 입력이 빈값, 공백이거나 숫자가 아니면 예외 처리 테스트")
     void inputFundsPatternTest(String input) {
         assertThatThrownBy(() ->
                 InputValidator.validateFunds(input)

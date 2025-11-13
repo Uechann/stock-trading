@@ -12,7 +12,9 @@ public enum ErrorMessage {
 
     // 계좌
     ACCOUNT_ID_PATTERN_NOT_MATCH("[ERROR] 계좌 번호 형식에 맞지 않습니다."),
-    ACCOUNT_DUPLICATED("[ERROR] 계좌 번호가 중복되었습니다.");
+    ACCOUNT_DUPLICATED("[ERROR] 계좌 번호가 중복되었습니다."),
+    ACCOUNT_FUNDS_PATTERN_NOT_MATCH("[ERROR] 계좌 자금 숫자 패턴에 맞지 않습니다."),
+    ACCOUNT_FUNDS_NOT_IN_RANGE("[ERROR] 계좌 자금 숫자 범위에 맞지 않습니다.");
 
     private String message;
 
