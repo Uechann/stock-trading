@@ -1,5 +1,7 @@
 package stockTrading.controller;
 
+import stockTrading.domain.model.AccountSymbols;
+import stockTrading.domain.model.Symbols;
 import stockTrading.domain.service.StockTradingService;
 import stockTrading.global.util.InputValidator;
 import stockTrading.view.InputView;
@@ -23,19 +25,18 @@ public class StockTradingController {
 
     public void run() {
         // 주식 종목 초기화
-        String symbols = retryUntilValid(inputView::inputSymbols, InputValidator::validateSymbol);
-        stockTradingService.createSymbols(symbols);
-        
+        String symbolInput = retryUntilValid(inputView::inputSymbols, InputValidator::validateSymbol);
+        Symbols symbols = stockTradingService.createSymbols(symbolInput);
+
         // 계좌 번호 초기화 -> 초기 자금 초기화 -> 계좌별 종목 보유량 초기화 (반복 -> until NEXT)
         while(true) {
             String accountId = retryUntilValidWithNoValidator(inputView::inputAccounts);
             if (accountId.equals("NEXT")) {
                 break;
             }
-
             String accountFunds = retryUntilValid(inputView::inputAccountFunds, InputValidator::validateFunds);
             String accountSymbols = retryUntilValid(inputView::inputAccountSymbolQuantity, InputValidator::validateSymbolQuantity);
-            stockTradingService.createAccount(accountId, accountFunds, accountSymbols);
+            AccountSymbols account = stockTradingService.createAccount(symbols, accountId, accountFunds, accountSymbols);
         }
     }
 
