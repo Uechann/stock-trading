@@ -16,6 +16,8 @@ public class Symbols {
         return new Symbols(symbols);
     }
 
+    // =============== private method =======================
+
     private static void validate(List<Symbol> symbols) {
         int count = (int) symbols.stream()
                 .map(Symbol::getName)

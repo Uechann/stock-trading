@@ -5,4 +5,5 @@ public class Pattern {
 
     public static final String SYMBOL_INPUT_REGEX = "^[A-Z]{1,5}(,[A-Z{1,5}])$";
     public static final String SYMBOL_NAME_REGEX = "^[A-Z]{1,5}$";
+    public static final String ACCOUNT_ID_REGEX = "^[0-9]{4}-[0-9]{2}-[0-9]{7}$";
 }

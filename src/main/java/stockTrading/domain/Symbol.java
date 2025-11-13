@@ -15,6 +15,8 @@ public class Symbol {
         return name;
     }
 
+    // ============== private method ======================
+
     private static void validate(String name) {
         if (!name.matches(SYMBOL_NAME_REGEX)) {
             throw new IllegalArgumentException(SYMBOL_NAME_PATTERN_NOT_MATCH.getMessage());

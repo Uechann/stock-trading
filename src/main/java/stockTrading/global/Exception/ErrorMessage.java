@@ -8,7 +8,11 @@ public enum ErrorMessage {
     // 종목
     SYMBOL_INPUT_PATTERN_NOT_MATCH("[ERROR] 종목 입력 형식에 맞지 않습니다."),
     SYMBOL_NAME_PATTERN_NOT_MATCH("[ERROR] 종목 이름 형식에 맞지 않습니다."),
-    SYMBOL_DUPLICATED("[ERROR] 종목 이름이 중복되었습니다.");
+    SYMBOL_DUPLICATED("[ERROR] 종목 이름이 중복되었습니다."),
+
+    // 계좌
+    ACCOUNT_ID_PATTERN_NOT_MATCH("[ERROR] 계좌 번호 형식에 맞지 않습니다."),
+    ACCOUNT_DUPLICATED("[ERROR] 계좌 번호가 중복되었습니다.");
 
     private String message;
 
