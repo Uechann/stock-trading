@@ -28,6 +28,11 @@ public class Account {
         return funds;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return id.equals((String) obj);
+    }
+
     // ==================== private method =====================
 
     private static void validateFunds(int funds) {

@@ -19,10 +19,10 @@ public class AccountSymbolTest {
     void AccountSymbolInputSuccessTest() {
 
         // when
-        AccountSymbol accountSymbol1 = AccountSymbol.of(account, symbol, 5);
+        AccountSymbol accountSymbol = AccountSymbol.of(account, symbol, 5);
 
         // then
-        assertThat(accountSymbol.getAccount()).isEqualTo(account);
+        assertThat(accountSymbol.getAccount()).isEqualTo(account.getId());
         assertThat(accountSymbol.getSymbol()).isEqualTo(symbol);
         assertThat(accountSymbol.getQuantity()).isEqualTo(5);
     }
