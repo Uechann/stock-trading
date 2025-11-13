@@ -39,4 +39,16 @@ public class InputValidatorTest {
                 InputValidator.validateFunds(input)
         ).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "APPL=abc,GOOG=30",
+            "APPL=-10,GOOG=30", "APPL50,GOOG=30"
+    })
+    @DisplayName("계좌 주식 보유 수량이 패턴에 맞지 않으면 예외 처리 테스트")
+    void inputSymbolQuantityTest(String input) {
+        assertThatThrownBy(() ->
+                InputValidator.validateSymbolQuantity(input)
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
 }
