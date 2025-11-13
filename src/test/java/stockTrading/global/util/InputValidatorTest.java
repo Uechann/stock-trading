@@ -16,7 +16,6 @@ public class InputValidatorTest {
         assertThatThrownBy(() ->
                 InputValidator.validateSymbol(input)
         ).isInstanceOf(IllegalArgumentException.class);
-
     }
 
     @ParameterizedTest
