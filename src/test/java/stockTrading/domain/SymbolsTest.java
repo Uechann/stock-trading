@@ -3,6 +3,8 @@ package stockTrading.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class SymbolsTest {
@@ -14,7 +16,7 @@ public class SymbolsTest {
         Symbol symbol2 = new Symbol("AAPL");
 
         assertThatThrownBy(() ->
-                Symbols.of(symbol1, symbol2)
+                Symbols.of(List.of(symbol1, symbol2))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

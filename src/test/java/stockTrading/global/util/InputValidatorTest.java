@@ -14,7 +14,7 @@ public class InputValidatorTest {
     void inputEmplyOrBlankTest(String input) {
 
         assertThatThrownBy(() ->
-                InputValidate.validateSymbol(input)
+                InputValidator.validateSymbol(input)
         ).isInstanceOf(IllegalArgumentException.class);
 
     }
