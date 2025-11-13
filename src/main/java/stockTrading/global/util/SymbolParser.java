@@ -3,7 +3,7 @@ package stockTrading.global.util;
 import java.util.Arrays;
 import java.util.List;
 
-public class SymbolParser implements Parser {
+public class SymbolParser implements Parser<String> {
 
     private final String symbolDelimiter = ",";
 
