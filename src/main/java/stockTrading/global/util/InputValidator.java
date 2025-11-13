@@ -5,6 +5,11 @@ import static stockTrading.global.constant.Pattern.SYMBOL_INPUT_REGEX;
 
 public class InputValidator {
 
+    // 공통 빈 값만 검증하는 메서드
+    public static void validateGlobalEmptyOrBlank(String input) {
+        validateEmptyOrBlank(input);
+    }
+
     // 종목 검증
     public static void validateSymbol(String symbolInput) {
         validateEmptyOrBlank(symbolInput);
