@@ -1,6 +1,7 @@
 package stockTrading.global.util;
 
 import static stockTrading.global.Exception.ErrorMessage.*;
+import static stockTrading.global.constant.Pattern.SYMBOL_INPUT_REGEX;
 
 public class InputValidator {
 
@@ -10,11 +11,10 @@ public class InputValidator {
         validateSymbolPattern(symbolInput);
     }
 
-
     // ============== private method =================
 
     private static void validateSymbolPattern(String symbolInput) {
-        if (!symbolInput.matches("^[A-Z]{1,5}(,[A-Z{1,5}])$")) {
+        if (!symbolInput.matches(SYMBOL_INPUT_REGEX)) {
             throw new IllegalArgumentException(SYMBOL_INPUT_PATTERN_NOT_MATCH.getMessage());
         }
     }

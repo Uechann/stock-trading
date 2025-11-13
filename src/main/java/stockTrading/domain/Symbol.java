@@ -3,6 +3,7 @@ package stockTrading.domain;
 import stockTrading.global.Exception.ErrorMessage;
 
 import static stockTrading.global.Exception.ErrorMessage.SYMBOL_NAME_PATTERN_NOT_MATCH;
+import static stockTrading.global.constant.Pattern.SYMBOL_NAME_REGEX;
 
 public class Symbol {
     private final String name;
@@ -17,7 +18,7 @@ public class Symbol {
     }
 
     private static void validate(String name) {
-        if (!name.matches("^[A-Z]{1,5}$")) {
+        if (!name.matches(SYMBOL_NAME_REGEX)) {
             throw new IllegalArgumentException(SYMBOL_NAME_PATTERN_NOT_MATCH.getMessage());
         }
     }
