@@ -22,7 +22,27 @@ public class AccountTest {
     @DisplayName("계좌번호 입력 형식 실패 테스트")
     void accountInputFailTest(String input) {
         assertThatThrownBy(() ->
-            new Account(input)
+                new Account(input)
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("초기 자금 초기화 성공 테스트")
+    void accountFundsInitializeTest() {
+        Account account = new Account("3333-12-1234567");
+        account.initializeFunds(1_000_000);
+
+        assertThat(account.getFunds()).isEqualTo(1_000_000);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-50000, 6000000})
+    @DisplayName("초기 자금 초기화 실패 테스트")
+    void accountFundsInitializeFailTest(int funds) {
+        Account account = new Account("3333-12-1234567");
+
+        assertThatThrownBy(() ->
+                account.initializeFunds(funds)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

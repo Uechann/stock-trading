@@ -30,4 +30,12 @@ public class InputValidatorTest {
                 InputValidator.validateSymbol(input)
         ).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", " ", "abc123", "asdf"})
+    void inputFundsPatternTest(String input) {
+        assertThatThrownBy(() ->
+                InputValidator.validateFunds(input)
+        ).isInstanceOf(IllegalArgumentException.class);
+    }
 }
