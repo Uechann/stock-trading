@@ -1,4 +1,4 @@
-package stockTrading.domain;
+package stockTrading.domain.model;
 
 import static stockTrading.global.Exception.ErrorMessage.ACCOUNT_FUNDS_NOT_IN_RANGE;
 import static stockTrading.global.Exception.ErrorMessage.ACCOUNT_ID_PATTERN_NOT_MATCH;

@@ -1,4 +1,4 @@
-package stockTrading.domain;
+package stockTrading.domain.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;

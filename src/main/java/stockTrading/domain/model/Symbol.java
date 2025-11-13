@@ -1,4 +1,4 @@
-package stockTrading.domain;
+package stockTrading.domain.model;
 
 import static stockTrading.global.Exception.ErrorMessage.SYMBOL_NAME_PATTERN_NOT_MATCH;
 import static stockTrading.global.constant.Pattern.SYMBOL_NAME_REGEX;

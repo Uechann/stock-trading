@@ -1,4 +1,6 @@
-package stockTrading.domain;
+package stockTrading.domain.model;
+
+import org.assertj.core.data.MapEntry;
 
 import java.util.HashMap;
 import java.util.Map;
