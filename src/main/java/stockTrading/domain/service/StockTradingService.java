@@ -1,31 +1,33 @@
 package stockTrading.domain.service;
 
 import stockTrading.domain.model.*;
+import stockTrading.domain.repository.SymbolRegistry;
 import stockTrading.global.util.Parser;
 
 import java.util.List;
 
 public class StockTradingService {
 
+    private final SymbolRegistry symbolRegistry;
     private final Parser<String> symbolParser;
     private final Parser<String> quantityParser;
 
-    public StockTradingService(Parser<String> symbolParser, Parser<String> quantityParser) {
+    public StockTradingService(SymbolRegistry symbolRegistry, Parser<String> symbolParser, Parser<String> quantityParser) {
+        this.symbolRegistry = symbolRegistry;
         this.symbolParser = symbolParser;
         this.quantityParser = quantityParser;
     }
 
     // 종목 생성
-    public Symbols createSymbols(String symbols) {
-        List<String> symmbolList = symbolParser.parse(symbols);
-
-        return Symbols.of(symmbolList.stream()
+    public void createSymbols(String symbolsInput) {
+        List<String> symbolNames = symbolParser.parse(symbolsInput);
+        symbolNames.stream()
                 .map(Symbol::new)
-                .toList());
+                .forEach(symbolRegistry::add);
     }
 
     // 계좌 생성
-    public AccountSymbols createAccount(Symbols symbols, String accountId, String accountFunds, String accountSymbols) {
+    public AccountSymbols createAccount(String accountId, String accountFunds, String accountSymbols) {
         // 계좌 생성 및 자금 초기화
         Account account = new Account(accountId);
         account.initializeFunds(Integer.parseInt(accountFunds));

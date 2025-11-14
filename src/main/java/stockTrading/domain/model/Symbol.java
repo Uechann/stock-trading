@@ -13,6 +13,10 @@ public record Symbol(String name) {
         validate(name);
     }
 
+    public String getName() {
+        return name;
+    }
+
     // ============== private method ======================
 
     private static void validate(String name) {

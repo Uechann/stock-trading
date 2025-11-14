@@ -15,9 +15,7 @@ public class StockTradingController {
     private final InputView inputView;
     private final OutputView outputView;
 
-    public StockTradingController(
-            StockTradingService stockTradingService,
-            InputView inputView, OutputView outputView) {
+    public StockTradingController(StockTradingService stockTradingService, InputView inputView, OutputView outputView) {
         this.stockTradingService = stockTradingService;
         this.inputView = inputView;
         this.outputView = outputView;
@@ -26,7 +24,7 @@ public class StockTradingController {
     public void run() {
         // 주식 종목 초기화
         String symbolInput = retryUntilValid(inputView::inputSymbols, InputValidator::validateSymbol);
-        Symbols symbols = stockTradingService.createSymbols(symbolInput);
+        stockTradingService.createSymbols(symbolInput);
 
         // 계좌 번호 초기화 -> 초기 자금 초기화 -> 계좌별 종목 보유량 초기화 (반복 -> until NEXT)
         while(true) {
@@ -36,7 +34,7 @@ public class StockTradingController {
             }
             String accountFunds = retryUntilValid(inputView::inputAccountFunds, InputValidator::validateFunds);
             String accountSymbols = retryUntilValid(inputView::inputAccountSymbolQuantity, InputValidator::validateSymbolQuantity);
-            AccountSymbols account = stockTradingService.createAccount(symbols, accountId, accountFunds, accountSymbols);
+            AccountSymbols account = stockTradingService.createAccount(accountId, accountFunds, accountSymbols);
         }
     }
 

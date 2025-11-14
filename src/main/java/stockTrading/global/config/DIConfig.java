@@ -1,6 +1,8 @@
 package stockTrading.global.config;
 
 import stockTrading.controller.StockTradingController;
+import stockTrading.domain.model.Symbols;
+import stockTrading.domain.repository.SymbolRegistry;
 import stockTrading.domain.service.StockTradingService;
 import stockTrading.global.util.Parser;
 import stockTrading.global.util.SymbolParser;
@@ -18,8 +20,16 @@ public final class DIConfig {
         return new SymbolQuantityParser();
     }
 
+    public Symbols symbols() {
+        return new Symbols();
+    }
+
+    public SymbolRegistry symbolRegistry() {
+        return new SymbolRegistry(symbols());
+    }
+
     public StockTradingService stockTradingService() {
-        return new StockTradingService(symbolParser(), symbolQuantityParser());
+        return new StockTradingService(symbolRegistry(), symbolParser(), symbolQuantityParser());
     }
 
     public InputView inputView() {
