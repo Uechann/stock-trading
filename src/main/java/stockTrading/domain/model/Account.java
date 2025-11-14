@@ -6,22 +6,17 @@ import static stockTrading.global.constant.Pattern.ACCOUNT_ID_REGEX;
 
 public class Account {
 
-    private String id;
+    private final String id;
     private int funds;
 
-    public Account(String id) {
-        validateId(id);
+    public Account(String id, int funds) {
+        validate(id, funds);
         this.id = id;
-        this.funds = 0;
+        this.funds = funds;
     }
 
     public String getId() {
         return id;
-    }
-
-    public void initializeFunds(int funds) {
-        validateFunds(funds);
-        this.funds = funds;
     }
 
     public int getFunds() {
@@ -34,6 +29,11 @@ public class Account {
     }
 
     // ==================== private method =====================
+
+    private static void validate(String id, int funds) {
+        validateId(id);
+        validateFunds(funds);
+    }
 
     private static void validateFunds(int funds) {
         if (funds < 0 || funds > 5_000_000) {

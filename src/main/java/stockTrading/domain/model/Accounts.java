@@ -1,19 +1,34 @@
 package stockTrading.domain.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static stockTrading.global.Exception.ErrorMessage.ACCOUNT_DUPLICATED;
 
 public class Accounts {
-    private List<Account> accounts;
 
-    private Accounts(List<Account> accounts) {
-        this.accounts = accounts;
+    private Map<String, Account> values = new HashMap<>();
+
+    public Accounts() {}
+
+    public Accounts(List<Account> accounts) {
+        accounts.forEach(account -> values.put(account.getId(), account));
     }
 
     public static Accounts of(List<Account> accounts) {
         validate(accounts);
         return new Accounts(accounts);
+    }
+
+    // 중복 검사
+    public boolean contains(Account account) {
+        return values.containsKey(account.getId());
+    }
+
+    // 계좌 추가
+    public void add(Account account) {
+        values.put(account.getId(), account);
     }
 
     // ============== private method ===================

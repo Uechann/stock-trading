@@ -1,6 +1,7 @@
 package stockTrading.domain.service;
 
 import stockTrading.domain.model.*;
+import stockTrading.domain.repository.AccountRepository;
 import stockTrading.domain.repository.SymbolRegistry;
 import stockTrading.global.util.Parser;
 
@@ -9,11 +10,14 @@ import java.util.List;
 public class StockTradingService {
 
     private final SymbolRegistry symbolRegistry;
+    private final AccountRepository accountRepository;
     private final Parser<String> symbolParser;
     private final Parser<String> quantityParser;
 
-    public StockTradingService(SymbolRegistry symbolRegistry, Parser<String> symbolParser, Parser<String> quantityParser) {
+    public StockTradingService(SymbolRegistry symbolRegistry, AccountRepository accountRepository,
+                               Parser<String> symbolParser, Parser<String> quantityParser) {
         this.symbolRegistry = symbolRegistry;
+        this.accountRepository = accountRepository;
         this.symbolParser = symbolParser;
         this.quantityParser = quantityParser;
     }
@@ -27,10 +31,12 @@ public class StockTradingService {
     }
 
     // 계좌 생성
-    public AccountSymbols createAccount(String accountId, String accountFunds, String accountSymbols) {
+    public Account createAccountWithFunds(String accountId, String accountFunds) {
         // 계좌 생성 및 자금 초기화
-        Account account = new Account(accountId);
-        account.initializeFunds(Integer.parseInt(accountFunds));
+        Account account = new Account(accountId, Integer.parseInt(accountFunds));
+        accountRepository.add(account);
+        return account;
+    }
 
         // 종목 보유량 초기화
         AccountSymbols accountSymbols1 = new AccountSymbols();
