@@ -1,5 +1,6 @@
 package stockTrading.controller;
 
+import stockTrading.domain.model.Account;
 import stockTrading.domain.model.AccountSymbols;
 import stockTrading.domain.model.Symbols;
 import stockTrading.domain.service.StockTradingService;
@@ -33,8 +34,10 @@ public class StockTradingController {
                 break;
             }
             String accountFunds = retryUntilValid(inputView::inputAccountFunds, InputValidator::validateFunds);
+            Account account = stockTradingService.createAccountWithFunds(accountId, accountFunds);
+
             String accountSymbols = retryUntilValid(inputView::inputAccountSymbolQuantity, InputValidator::validateSymbolQuantity);
-            AccountSymbols account = stockTradingService.createAccount(accountId, accountFunds, accountSymbols);
+            stockTradingService.initializeSymbolQuantity(account, accountSymbols);
         }
     }
 

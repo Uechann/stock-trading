@@ -7,6 +7,8 @@ import stockTrading.global.util.Parser;
 
 import java.util.List;
 
+import static stockTrading.global.Exception.ErrorMessage.SYMBOL_NOT_FOUND;
+
 public class StockTradingService {
 
     private final SymbolRegistry symbolRegistry;
@@ -38,24 +40,27 @@ public class StockTradingService {
         return account;
     }
 
+    public void initializeSymbolQuantity(Account account, String accountSymbolInput) {
         // 종목 보유량 초기화
-        AccountSymbols accountSymbols1 = new AccountSymbols();
-        List<String> symbolAndQuantity = symbolParser.parse(accountSymbols);
+        AccountSymbols accountSymbols = new AccountSymbols();
+        List<String> symbolAndQuantitys = symbolParser.parse(accountSymbolInput);
 
-        symbolAndQuantity.stream()
-                .map(quantityParser::parse)
-                .filter(symbolQuantity -> symbols.contains(symbolQuantity.getFirst()))
-                .forEach(symbolQuantity -> {
-                    accountSymbols1.add(parseAccountSymbol(symbolQuantity, account));
-                });
+        for (String symbolAndQuantity : symbolAndQuantitys) {
+            List<String> symbolQuantity = quantityParser.parse(symbolAndQuantity);
+            String symbol = symbolQuantity.getFirst();
+            String quantity = symbolQuantity.get(1);
 
-        return accountSymbols1;
+            validateSymbolExist(symbolQuantity.getFirst());
+            accountSymbols.add(AccountSymbol.of(new Symbol(symbol), Integer.parseInt(quantity)));
+            account.initializeSymbolQuantities(accountSymbols);
+        }
     }
 
-    // 종목과 개수 파싱 후 계좌 종목 개수 클래수 생성 [APPL, 100]
-    private AccountSymbol parseAccountSymbol(List<String> symbolquantity, Account account) {
-        Symbol symbol = new Symbol(symbolquantity.getFirst());
-        int quantity = Integer.parseInt(symbolquantity.get(1));
-        return AccountSymbol.of(account, symbol, quantity);
+    // =================== private method ===================
+
+    private void validateSymbolExist(String symbol) {
+        if (!symbolRegistry.isContains(new Symbol(symbol))) {
+            throw new IllegalArgumentException(SYMBOL_NOT_FOUND.getMessage());
+        }
     }
 }

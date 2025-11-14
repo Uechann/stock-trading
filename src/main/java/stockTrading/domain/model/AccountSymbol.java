@@ -8,18 +8,12 @@ import java.util.Map;
 import static stockTrading.global.Exception.ErrorMessage.ACCOUNT_SYMBOL_QUANTITY_NOT_IN_RANGE;
 
 public class AccountSymbol {
-    private Account account;
     private Symbol symbol;
     private int quantity;
 
-    private AccountSymbol(Account account, Symbol symbol, int quantity) {
-        this.account = account;
+    private AccountSymbol(Symbol symbol, int quantity) {
         this.symbol = symbol;
         this.quantity = quantity;
-    }
-
-    public Account getAccount() {
-        return account;
     }
 
     public Symbol getSymbol() {
@@ -30,19 +24,9 @@ public class AccountSymbol {
         return quantity;
     }
 
-    public static AccountSymbol of(Account account, Symbol symbol, int quantity) {
+    public static AccountSymbol of(Symbol symbol, int quantity) {
         validateAccountSymbolQuantity(quantity);
-        return new AccountSymbol(account, symbol, quantity);
-    }
-
-    public boolean isSameAccountId(String accountId) {
-        return account.equals(accountId);
-    }
-
-    public Map<Symbol, Integer> toMap() {
-        Map<Symbol, Integer> map = new HashMap<>();
-        map.put(symbol, quantity);
-        return map;
+        return new AccountSymbol(symbol, quantity);
     }
 
     // =============== private metohd =====================

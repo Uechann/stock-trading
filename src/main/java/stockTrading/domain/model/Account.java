@@ -8,6 +8,7 @@ public class Account {
 
     private final String id;
     private int funds;
+    private AccountSymbols accountSymbols;
 
     public Account(String id, int funds) {
         validate(id, funds);
@@ -21,6 +22,14 @@ public class Account {
 
     public int getFunds() {
         return funds;
+    }
+
+    public void initializeSymbolQuantities(AccountSymbols accountSymbols) {
+        this.accountSymbols = accountSymbols;
+    }
+
+    public int getQuantity(Symbol symbol) {
+        return accountSymbols.getQuantity(symbol);
     }
 
     @Override

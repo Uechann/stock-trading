@@ -6,24 +6,24 @@ import java.util.List;
 import java.util.Map;
 
 public class AccountSymbols {
-    private List<AccountSymbol> accountSymbols;
+    private final Map<Symbol, AccountSymbol> values = new HashMap<>();
 
     public AccountSymbols() {
-        accountSymbols = new ArrayList<>();
+    }
+
+    public AccountSymbols(List<AccountSymbol> accountSymbols) {
+        accountSymbols.forEach(symbol -> values.put(symbol.getSymbol(), symbol));
     }
 
     public void add(AccountSymbol accountSymbol) {
-        accountSymbols.add(accountSymbol);
+        values.put(accountSymbol.getSymbol(), accountSymbol);
     }
 
-    public Map<Symbol, Integer> findByAccountId(String accountId) {
-        Map<Symbol, Integer> result = new HashMap<>();
+    public int getQuantity(Symbol symbol) {
+        if (!values.containsKey(symbol)) {
+            return 0;
+        }
 
-        accountSymbols.stream()
-                .filter(a -> a.isSameAccountId(accountId))
-                .map(AccountSymbol::toMap)
-                .forEach(result::putAll);
-
-        return result;
+        return values.get(symbol).getQuantity();
     }
 }
