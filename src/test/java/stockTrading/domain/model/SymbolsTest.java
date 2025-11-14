@@ -16,7 +16,7 @@ public class SymbolsTest {
         Symbol symbol2 = new Symbol("AAPL");
 
         assertThatThrownBy(() ->
-                Symbols.of(List.of(symbol1, symbol2))
+                new Symbols(List.of(symbol1, symbol2))
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }
