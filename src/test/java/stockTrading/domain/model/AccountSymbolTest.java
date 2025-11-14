@@ -11,7 +11,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class AccountSymbolTest {
 
     // given
-    Account account = new Account("3333-12-1234567");
     Symbol symbol = new Symbol("AAPL");
 
     @Test
@@ -19,10 +18,9 @@ public class AccountSymbolTest {
     void AccountSymbolInputSuccessTest() {
 
         // when
-        AccountSymbol accountSymbol = AccountSymbol.of(account, symbol, 5);
+        AccountSymbol accountSymbol = AccountSymbol.of(symbol, 5);
 
         // then
-        assertThat(accountSymbol.getAccount()).isEqualTo(account.getId());
         assertThat(accountSymbol.getSymbol()).isEqualTo(symbol);
         assertThat(accountSymbol.getQuantity()).isEqualTo(5);
     }
@@ -33,7 +31,7 @@ public class AccountSymbolTest {
     void AccountSymbolInputFailTest(int quantity) {
 
         assertThatThrownBy(() ->
-                AccountSymbol.of(account, symbol, quantity)
+                AccountSymbol.of(symbol, quantity)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

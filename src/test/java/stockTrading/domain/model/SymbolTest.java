@@ -13,5 +13,4 @@ public class SymbolTest {
         Symbol symbol = new Symbol("AAPL");
         assertThat(symbol.getName()).isEqualTo("AAPL");
     }
-
 }
