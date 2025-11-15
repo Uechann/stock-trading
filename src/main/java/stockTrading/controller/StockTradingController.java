@@ -23,6 +23,9 @@ public class StockTradingController {
     public void run() {
         initialize();
 
+        // 주문 생성
+        // ORDER A1 AAPL BUY 120 50
+        // ORDER A2 AAPL SELL 115 30
 
     }
 

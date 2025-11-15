@@ -193,7 +193,7 @@ Controll, service, 등 의존성 DI 컨테이너 구현합니다.
     - [ ] 수량이 0일 경우 예외 처리
     - [ ] 수량 최대 한도 (10,000) 초과 시 예외 처리
 - 가격 X 수량 
-    - [ ] 가격 X 수량이 10,000,000 초과 시 예외 처리
+    - [ ] 가격 X 수량이 3,000,000 초과 시 예외 처리
     - [ ] 매수 주문 시 계좌의 현금이 부족할 경우 예외 처리
     - [ ] 매도 주문 시 계좌의 보유 수량이 부족할 경우 예외 처리
 
@@ -500,19 +500,13 @@ A1:AAPL=60,A2:AAPL=40
 
 ```java
 주문을 입력하세요.(예:ORDER<ACC> <SYM> <BUY|SELL> <PRICE> <QTY> /CANCEL<ORDER_ID> /ADD_SYMBOL<SYM> /END)
-ORDER A1
-AAPL BUY 120 50
-ORDER A2
-AAPL SELL 115 30
-ORDER A2
-AAPL SELL 120 20
-ORDER A1
-GOOG BUY 200 10
-ORDER A2
-GOOG SELL 210 5
+ORDER A1 AAPL BUY 120 50
+ORDER A2 AAPL SELL 115 30
+ORDER A2 AAPL SELL 120 20
+ORDER A1 GOOG BUY 200 10
+ORDER A2 GOOG SELL 210 5
 ADD_SYMBOL TSLA
-ORDER A1
-TSLA BUY 80 10
+ORDER A1 TSLA BUY 80 10
 CANCEL 2
 END
 ```
