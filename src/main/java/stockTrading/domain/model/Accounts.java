@@ -31,6 +31,11 @@ public class Accounts {
         values.put(account.getId(), account);
     }
 
+    // 계좌번호로 조회
+    public Account findById(String id) {
+        return values.get(id);
+    }
+
     // ============== private method ===================
 
     private static void validate(List<Account> accounts) {

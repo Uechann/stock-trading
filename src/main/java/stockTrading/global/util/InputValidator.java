@@ -28,16 +28,29 @@ public class InputValidator {
         validateAccountSymbolQuantityPattern(symbolQuantityInput);
     }
 
+    // 주문 검증
+    public static boolean validateOrder(String orderInput) {
+        validateEmptyOrBlank(orderInput);
+        validateOrderPattern(orderInput);
+        return true;
+    }
+
+    // ============== private method =================
+
+    private static void validateOrderPattern(String orderInput) {
+        if (!orderInput.matches(ORDER_REGEX)) {
+            throw new IllegalArgumentException(ORDER_PATTERN_NOT_MATCH.getMessage());
+        }
+    }
+
     private static void validateAccountSymbolQuantityPattern(String symbolQuantityInput) {
         if (!symbolQuantityInput.matches(ACCOUNT_SYMBOL_REGEX)) {
             throw new IllegalArgumentException(ACCOUNT_SYMBOL_QUANTITY_NOT_MATCH.getMessage());
         }
     }
 
-    // ============== private method =================
-
     private static void validateAccountFundsPattern(String fundsInput) {
-        if (!fundsInput.matches(ACCOUNT_FUNDS_REGEX)) {
+        if (!fundsInput.matches("^" + NUMBER + "$")) {
             throw new IllegalArgumentException(ACCOUNT_FUNDS_PATTERN_NOT_MATCH.getMessage());
         }
     }

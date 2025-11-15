@@ -4,6 +4,8 @@ import stockTrading.domain.model.Account;
 import stockTrading.domain.model.Accounts;
 import stockTrading.domain.repository.AccountRepository;
 
+import java.util.Optional;
+
 import static stockTrading.global.Exception.ErrorMessage.ACCOUNT_DUPLICATED;
 
 public class InMemoryAccountRepository implements AccountRepository {
@@ -14,6 +16,11 @@ public class InMemoryAccountRepository implements AccountRepository {
     public void add(Account account) {
         validateDuplicated(account);
         accounts.add(account);
+    }
+
+    @Override
+    public Optional<Account> fingById(String id) {
+        return Optional.ofNullable(accounts.findById(id));
     }
 
     // ============== private metohd ==================

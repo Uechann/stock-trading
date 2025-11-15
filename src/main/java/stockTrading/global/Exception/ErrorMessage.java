@@ -17,7 +17,23 @@ public enum ErrorMessage {
     ACCOUNT_FUNDS_PATTERN_NOT_MATCH("[ERROR] 계좌 자금 숫자 패턴에 맞지 않습니다."),
     ACCOUNT_FUNDS_NOT_IN_RANGE("[ERROR] 계좌 자금 숫자 범위에 맞지 않습니다."),
     ACCOUNT_SYMBOL_QUANTITY_NOT_MATCH("[ERROR] 계좌 종목 보유 수량에 대한 입력 형식이 맞지 않습니다."),
-    ACCOUNT_SYMBOL_QUANTITY_NOT_IN_RANGE("[ERROR] 계좌 종 목 보유 수량 범위에 맞지 않습니다.");
+    ACCOUNT_SYMBOL_QUANTITY_NOT_IN_RANGE("[ERROR] 계좌 종 목 보유 수량 범위에 맞지 않습니다."),
+    ACCOUNT_NOT_FOUND("[ERROR] 계좌가 존재하지 않습니다."),
+
+
+    // 주문
+    ORDER_PATTERN_NOT_MATCH("[ERROR] 주문 형식에 맞지 않습니다."),
+    ORDER_REQUEST_SIZE_NOT_MATCH("[ERROR] 주문 요청 필요한 값이 누락되었습니다."),
+    ORDER_SIDE_IS_NOT_ALLOWED("[ERROR] 주문은 매도 매수만 가능합니다."),
+    ORDER_PRICE_IS_POSITIVE("[ERROR] 주문은 가격은 양수만 가능합니다."),
+    ORDER_PRICE_IS_OVER("[ERROR] 주문 가격이 한도(1,000,000)를 초과하였습니다."),
+    ORDER_QUANTITY_IS_POSITIVE("[ERROR] 주문 수량은 양수만 가능합니다."),
+    ORDER_QUANTITY_IS_OVER("[ERROR] 주문 수량이 한도(10,000)를 초과하였습니다."),
+    ORDER_TOTAL_PRICE_IS_OVER("[ERROR] 주문 총 가격이 한도(10,000,000)를 초과하였습니다."),
+    ORDER_ACCOUNT_FUNDS_IS_LEAK("[ERROR] 계좌 잔고가 부족합니다."),
+    ORDER_ACCOUNT_SYMBOL_QUANTITY_IS_LEAK("[ERROR] 계좌 종목 보유량이 부족합니다.");
+
+
 
     private String message;
 

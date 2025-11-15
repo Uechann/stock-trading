@@ -25,4 +25,9 @@ public class InputView {
         System.out.println("계좌 초기 종목 보유량을 입력하세요");
         return Console.readLine();
     }
+
+    public String inputOrder() {
+        System.out.println("주문을 입력하세요. (예: ORDER 3333-12-1234567 APPL BUY 120 50)");
+        return Console.readLine();
+    }
 }

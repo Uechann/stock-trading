@@ -1,0 +1,69 @@
+package stockTrading.domain.service;
+
+import stockTrading.domain.model.Account;
+import stockTrading.domain.model.Order;
+import stockTrading.domain.model.Symbol;
+import stockTrading.domain.repository.AccountRepository;
+import stockTrading.domain.repository.OrderRepository;
+import stockTrading.domain.repository.SymbolRegistry;
+import stockTrading.dto.OrderRequest;
+import stockTrading.global.util.Parser;
+
+import java.util.List;
+
+import static stockTrading.global.Exception.ErrorMessage.ACCOUNT_NOT_FOUND;
+import static stockTrading.global.Exception.ErrorMessage.SYMBOL_NOT_FOUND;
+
+public class OrderService {
+
+    private final AccountRepository accountRepository;
+    private final SymbolRegistry symbolRegistry;
+    private final OrderRepository orderRepository;
+    private final OrderValidator orderValidator;
+    private final Parser<String> parser;
+
+    public OrderService(AccountRepository accountRepository,
+                        SymbolRegistry symbolRegistry,
+                        OrderRepository orderRepository,
+                        OrderValidator orderValidator,
+                        Parser<String> parser) {
+        this.accountRepository = accountRepository;
+        this.symbolRegistry = symbolRegistry;
+        this.orderRepository = orderRepository;
+        this.orderValidator = orderValidator;
+        this.parser = parser;
+    }
+
+    public void createOrder(String orderInput) {
+        // 주문 요형 dto 변환 파싱
+        OrderRequest orderRequest = OrderRequest.of(parser.parse(orderInput));
+
+        // 계좌 존재 검증
+        Account account = findByAccountId(orderRequest);
+        // 종목 존재 검증
+        Symbol symbol = new Symbol(orderRequest.symbol());
+        validateSymbol(symbol);
+
+        // 주문 검증
+        orderValidator.validate(
+                account,
+                symbol,
+                orderRequest.side(),
+                orderRequest.price(),
+                orderRequest.quantity());
+
+        // Order 객체 생성 및 저장
+//        Order
+    }
+
+    private void validateSymbol(Symbol symbol) {
+        if (!symbolRegistry.isContains(symbol)) {
+            throw new IllegalArgumentException(SYMBOL_NOT_FOUND.getMessage());
+        }
+    }
+
+    private Account findByAccountId(OrderRequest orderRequest) {
+        return accountRepository.fingById(orderRequest.accountId())
+                .orElseThrow(() -> new IllegalArgumentException(ACCOUNT_NOT_FOUND.getMessage()));
+    }
+}
