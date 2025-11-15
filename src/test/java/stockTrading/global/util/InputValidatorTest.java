@@ -1,8 +1,13 @@
 package stockTrading.global.util;
 
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import stockTrading.domain.model.Account;
+import stockTrading.domain.model.Symbol;
+import stockTrading.dto.OrderRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -53,14 +58,22 @@ public class InputValidatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"ORDER A1 AAPL BUY 120 50", "ORDER A2 AAPL SELL 115 30"})
+    @ValueSource(strings = {
+            "ORDER 3333-11-1234567 AAPL BUY 120 50",
+            "ORDER 3333-22-1234567 AAPL SELL 115 30"})
     @DisplayName("주문 입력에 대한 성공 테스트")
     void inputOrderSuccessTest(String input) {
         assertThat(InputValidator.validateOrder(input)).isEqualTo(true);
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"", " "})
+    @ValueSource(strings = {
+            "", " ",
+            "ORDER 3333-11-1234567 APPL RES 120 50",
+            "ORDER 333-333-333 APPL BUY 120 50",
+            "OOOO 3333-11-1234567 APPL BUY 120 50",
+            "ORDER,3333-11-1234567,APPL,BUY,120,50"
+    })
     @DisplayName("주문 입력이 해당 형식 패턴에 맞지 않으면 예외를 발생한다.")
     void inputOrderFailureTest(String input) {
         assertThatThrownBy(() ->
