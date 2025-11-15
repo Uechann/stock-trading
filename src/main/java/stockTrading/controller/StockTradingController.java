@@ -2,36 +2,37 @@ package stockTrading.controller;
 
 import stockTrading.domain.model.Account;
 import stockTrading.domain.service.InitialService;
+import stockTrading.domain.service.OrderService;
 import stockTrading.global.util.InputValidator;
 import stockTrading.view.InputView;
 import stockTrading.view.OutputView;
 
 import static stockTrading.global.util.Retry.retryUntilValid;
-import static stockTrading.global.util.Retry.retryUntilValidWithNoValidator;
 
 public class StockTradingController {
     private final InitialService initialService;
+    private final OrderService orderService;
     private final InputView inputView;
     private final OutputView outputView;
 
-    public StockTradingController(InitialService initialService, InputView inputView, OutputView outputView) {
+    public StockTradingController(InitialService initialService, OrderService orderService, InputView inputView, OutputView outputView) {
         this.initialService = initialService;
+        this.orderService = orderService;
         this.inputView = inputView;
         this.outputView = outputView;
     }
 
     public void run() {
         initialize();
-
-        // 주문 생성
-        // ORDER A1 AAPL BUY 120 50
-        // ORDER A2 AAPL SELL 115 30
-
+        inputAndCreateOrder();
     }
-
 
     // ===================== private method ========================
 
+    private void inputAndCreateOrder() {
+        String orderInput = retryUntilValid(inputView::inputOrder, InputValidator::validateOrder);
+        orderService.createOrder(orderInput);
+    }
 
     private void initialize() {
         initialSymbols();
@@ -45,7 +46,7 @@ public class StockTradingController {
 
     private void initialAccount() {
         while(true) {
-            String accountId = retryUntilValidWithNoValidator(inputView::inputAccounts);
+            String accountId = retryUntilValid(inputView::inputAccounts, InputValidator::validateGlobalEmptyOrBlank);
             if (accountId.equals("NEXT")) {
                 break;
             }

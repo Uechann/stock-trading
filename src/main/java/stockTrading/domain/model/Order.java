@@ -1,24 +1,41 @@
 package stockTrading.domain.model;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
+
 public class Order {
 
-    private Long orderId;
-    private String accountId;
-    private Symbol symbol;
-    private String side;
-    private int price;
-    private int quantity;
+    private final UUID orderId;
+    private final String accountId;
+    private final Symbol symbol;
+    private final String side;
+    private final int price;
+    private final int quantity;
+    private int remainingQuantity;
+    private OrderStatus status;
+    private final LocalDateTime orderDate;
 
-    private Order(String accountId, Symbol symbol, String side, int price, int quantity) {
+    private Order(UUID orderId, String accountId, Symbol symbol, String side, int price, int quantity, LocalDateTime orderDate) {
+        this.orderId = orderId;
         this.accountId = accountId;
         this.symbol = symbol;
         this.side = side;
         this.price = price;
         this.quantity = quantity;
+        this.remainingQuantity = quantity;
+        this.status = OrderStatus.PENDING;
+        this.orderDate = orderDate;
     }
 
-    public static Order of(String accountId, Symbol symbol, String side, int price, int quantity) {
-        return new Order(accountId, symbol, side, price, quantity);
+    public static Order create(String accountId, Symbol symbol, String side, int price, int quantity) {
+        UUID orderId = UUID.randomUUID();
+        LocalDateTime orderDate = LocalDateTime.now();
+        return new Order(orderId, accountId, symbol, side, price, quantity, orderDate);
+    }
+
+    public UUID getOrderId() {
+        return orderId;
     }
 
     public String getAccount() {

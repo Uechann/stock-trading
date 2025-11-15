@@ -60,7 +60,7 @@ public class OrderTest {
 
         Symbol symbol = new Symbol("APPL");
 
-        Order order = Order.of(orderRequest.accountId(), symbol, orderRequest.side(), orderRequest.price(), orderRequest.quantity());
+        Order order = Order.create(orderRequest.accountId(), symbol, orderRequest.side(), orderRequest.price(), orderRequest.quantity());
         assertThat(order).isNotNull();
         assertThat(order.getAccount()).isEqualTo(orderRequest.accountId());
         assertThat(order.getSymbol()).isEqualTo(symbol);

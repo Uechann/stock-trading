@@ -35,16 +35,12 @@ public class OrderService {
     }
 
     public void createOrder(String orderInput) {
-        // 주문 요형 dto 변환 파싱
         OrderRequest orderRequest = OrderRequest.of(parser.parse(orderInput));
 
-        // 계좌 존재 검증
         Account account = findByAccountId(orderRequest);
-        // 종목 존재 검증
         Symbol symbol = new Symbol(orderRequest.symbol());
         validateSymbol(symbol);
 
-        // 주문 검증
         orderValidator.validate(
                 account,
                 symbol,
@@ -52,9 +48,11 @@ public class OrderService {
                 orderRequest.price(),
                 orderRequest.quantity());
 
-        // Order 객체 생성 및 저장
-//        Order
+        Order order = Order.create(orderRequest.accountId(), symbol, orderRequest.side(), orderRequest.price(), orderRequest.quantity());
+        orderRepository.add(order);
     }
+
+    // ================ private method ==================
 
     private void validateSymbol(Symbol symbol) {
         if (!symbolRegistry.isContains(symbol)) {
