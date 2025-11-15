@@ -9,15 +9,15 @@ import java.util.List;
 
 import static stockTrading.global.Exception.ErrorMessage.SYMBOL_NOT_FOUND;
 
-public class StockTradingService {
+public class InitialService {
 
     private final SymbolRegistry symbolRegistry;
     private final AccountRepository accountRepository;
     private final Parser<String> symbolParser;
     private final Parser<String> quantityParser;
 
-    public StockTradingService(SymbolRegistry symbolRegistry, AccountRepository accountRepository,
-                               Parser<String> symbolParser, Parser<String> quantityParser) {
+    public InitialService(SymbolRegistry symbolRegistry, AccountRepository accountRepository,
+                          Parser<String> symbolParser, Parser<String> quantityParser) {
         this.symbolRegistry = symbolRegistry;
         this.accountRepository = accountRepository;
         this.symbolParser = symbolParser;
