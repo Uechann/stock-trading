@@ -51,7 +51,7 @@ public class Account {
     }
 
     private static void validateId(String id) {
-        if (!id.matches(ACCOUNT_ID_REGEX)) {
+        if (!id.matches("^" + ACCOUNT_ID_REGEX + "$")) {
             throw new IllegalArgumentException(ACCOUNT_ID_PATTERN_NOT_MATCH.getMessage());
         }
     }
