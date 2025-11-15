@@ -4,7 +4,7 @@ import stockTrading.controller.StockTradingController;
 import stockTrading.domain.model.Symbols;
 import stockTrading.domain.repository.AccountRepository;
 import stockTrading.domain.repository.SymbolRegistry;
-import stockTrading.domain.service.StockTradingService;
+import stockTrading.domain.service.InitialService;
 import stockTrading.global.util.Parser;
 import stockTrading.global.util.SymbolParser;
 import stockTrading.global.util.SymbolQuantityParser;
@@ -13,6 +13,10 @@ import stockTrading.view.InputView;
 import stockTrading.view.OutputView;
 
 public final class DIConfig {
+
+    private final Symbols symbols = new Symbols();
+    private final SymbolRegistry symbolRegistry = new SymbolRegistry(symbols);
+    private final AccountRepository accountRepository = new InMemoryAccountRepository();
 
     public Parser<String> symbolParser() {
         return new SymbolParser();
@@ -23,19 +27,23 @@ public final class DIConfig {
     }
 
     public Symbols symbols() {
-        return new Symbols();
+        return symbols;
     }
 
     public SymbolRegistry symbolRegistry() {
-        return new SymbolRegistry(symbols());
+        return symbolRegistry;
     }
 
     public AccountRepository accountRepository() {
-        return new InMemoryAccountRepository();
+        return accountRepository;
     }
 
-    public StockTradingService stockTradingService() {
-        return new StockTradingService(symbolRegistry(), accountRepository(), symbolParser(), symbolQuantityParser());
+    public InitialService stockTradingService() {
+        return new InitialService(
+                symbolRegistry(),
+                accountRepository(),
+                symbolParser(),
+                symbolQuantityParser());
     }
 
     public InputView inputView() {
