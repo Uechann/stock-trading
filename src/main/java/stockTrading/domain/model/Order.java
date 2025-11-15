@@ -28,6 +28,18 @@ public class Order {
         this.orderDate = orderDate;
     }
 
+    public int getRemainingQuantity() {
+        return remainingQuantity;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
     public static Order create(String accountId, Symbol symbol, String side, int price, int quantity) {
         UUID orderId = UUID.randomUUID();
         LocalDateTime orderDate = LocalDateTime.now();

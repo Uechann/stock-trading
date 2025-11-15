@@ -67,5 +67,7 @@ public class OrderTest {
         assertThat(order.getSide()).isEqualTo("BUY");
         assertThat(order.getPrice()).isEqualTo(150);
         assertThat(order.getQuantity()).isEqualTo(50);
+        assertThat(order.getRemainingQuantity()).isEqualTo(50);
+        assertThat(order.getStatus()).isEqualTo(OrderStatus.PENDING);
     }
 }
