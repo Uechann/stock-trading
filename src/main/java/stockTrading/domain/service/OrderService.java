@@ -55,6 +55,7 @@ public class OrderService {
         Order order = Order.create(orderRequest.accountId(), symbol, orderRequest.side(), orderRequest.price(), orderRequest.quantity());
         orderRepository.add(order);
         List<Trade> matchResult = matchingService.match(order);
+
     }
 
     // ================ private method ==================

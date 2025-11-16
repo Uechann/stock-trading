@@ -26,12 +26,6 @@ public class StockTradingController {
     public void run() {
         initialize();
         inputAndStartOrder();
-
-        // 매칭
-
-
-        // 정산
-
     }
 
     // ===================== private method ========================
