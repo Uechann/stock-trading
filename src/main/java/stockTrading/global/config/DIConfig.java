@@ -3,6 +3,7 @@ package stockTrading.global.config;
 import stockTrading.controller.StockTradingController;
 import stockTrading.domain.model.Symbols;
 import stockTrading.domain.repository.AccountRepository;
+import stockTrading.domain.repository.OrderBookRepository;
 import stockTrading.domain.repository.OrderRepository;
 import stockTrading.domain.repository.SymbolRegistry;
 import stockTrading.domain.service.InitialService;
@@ -14,16 +15,18 @@ import stockTrading.global.util.Parser;
 import stockTrading.global.util.SymbolParser;
 import stockTrading.global.util.SymbolQuantityParser;
 import stockTrading.infra.InMemoryAccountRepository;
+import stockTrading.infra.InMemoryOrderBookRepository;
 import stockTrading.infra.InMemoryOrderRepository;
 import stockTrading.view.InputView;
 import stockTrading.view.OutputView;
 
 public final class DIConfig {
 
-    private final Symbols symbols = new Symbols();
     private final AccountRepository accountRepository = new InMemoryAccountRepository();
-    private final SymbolRegistry symbolRegistry = new SymbolRegistry(symbols);
     private final OrderRepository orderRepository = new InMemoryOrderRepository();
+    private final OrderBookRepository orderBookRepository = new InMemoryOrderBookRepository();
+    private final Symbols symbols = new Symbols();
+    private final SymbolRegistry symbolRegistry = new SymbolRegistry(symbols);
 
     public Parser<String> symbolParser() {
         return new SymbolParser();
@@ -49,6 +52,10 @@ public final class DIConfig {
         return orderRepository;
     }
 
+    public OrderBookRepository orderBookRepository() {
+        return orderBookRepository;
+    }
+
     public OrderValidator orderValidator() {
         return new OrderValidator();
     }
@@ -57,8 +64,13 @@ public final class DIConfig {
         return new InitialService(
                 symbolRegistry(),
                 accountRepository(),
+                orderBookRepository(),
                 symbolParser(),
                 symbolQuantityParser());
+    }
+
+    public MatchingService matchingService() {
+        return new MatchingService(orderBookRepository());
     }
 
     public OrderService orderService() {
@@ -67,12 +79,9 @@ public final class DIConfig {
                 symbolRegistry(),
                 orderRepository(),
                 orderValidator(),
+                matchingService(),
                 OrderParser()
         );
-    }
-
-    public MatchingService matchingService() {
-        return new MatchingService();
     }
 
     public InputView inputView() {
@@ -87,7 +96,6 @@ public final class DIConfig {
         return new StockTradingController(
                 initialService(),
                 orderService(),
-                matchingService(),
                 inputView(),
                 outputView());
     }

@@ -31,9 +31,10 @@ public enum ErrorMessage {
     ORDER_QUANTITY_IS_OVER("[ERROR] 주문 수량이 한도(10,000)를 초과하였습니다."),
     ORDER_TOTAL_PRICE_IS_OVER("[ERROR] 주문 총 가격이 한도(10,000,000)를 초과하였습니다."),
     ORDER_ACCOUNT_FUNDS_IS_LEAK("[ERROR] 계좌 잔고가 부족합니다."),
-    ORDER_ACCOUNT_SYMBOL_QUANTITY_IS_LEAK("[ERROR] 계좌 종목 보유량이 부족합니다.");
+    ORDER_ACCOUNT_SYMBOL_QUANTITY_IS_LEAK("[ERROR] 계좌 종목 보유량이 부족합니다."),
 
-
+    // 매칭
+    ORDER_BOOK_SYMBOL_NOT_FOUND("[ERROR] 해당 종목이 없습니다.");
 
     private String message;
 

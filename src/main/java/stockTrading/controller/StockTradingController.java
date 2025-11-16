@@ -13,14 +13,12 @@ import static stockTrading.global.util.Retry.retryUntilValid;
 public class StockTradingController {
     private final InitialService initialService;
     private final OrderService orderService;
-    private final MatchingService matchingService;
     private final InputView inputView;
     private final OutputView outputView;
 
-    public StockTradingController(InitialService initialService, OrderService orderService, MatchingService matchingService, InputView inputView, OutputView outputView) {
+    public StockTradingController(InitialService initialService, OrderService orderService, InputView inputView, OutputView outputView) {
         this.initialService = initialService;
         this.orderService = orderService;
-        this.matchingService = matchingService;
         this.inputView = inputView;
         this.outputView = outputView;
     }

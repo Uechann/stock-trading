@@ -8,6 +8,7 @@ import stockTrading.domain.repository.AccountRepository;
 import stockTrading.domain.repository.SymbolRegistry;
 import stockTrading.global.util.OrderParser;
 import stockTrading.infra.InMemoryAccountRepository;
+import stockTrading.infra.InMemoryOrderBookRepository;
 import stockTrading.infra.InMemoryOrderRepository;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -34,6 +35,7 @@ public class OrderServiceTest {
                 symbolRegistry,
                 new InMemoryOrderRepository(),
                 orderValidator,
+                new MatchingService(new InMemoryOrderBookRepository()),
                 new OrderParser()
         );
 

@@ -3,6 +3,7 @@ package stockTrading.domain.service;
 import stockTrading.domain.model.Account;
 import stockTrading.domain.model.Order;
 import stockTrading.domain.model.Symbol;
+import stockTrading.domain.model.Trade;
 import stockTrading.domain.repository.AccountRepository;
 import stockTrading.domain.repository.OrderRepository;
 import stockTrading.domain.repository.SymbolRegistry;
@@ -20,17 +21,20 @@ public class OrderService {
     private final SymbolRegistry symbolRegistry;
     private final OrderRepository orderRepository;
     private final OrderValidator orderValidator;
+    private final MatchingService matchingService;
     private final Parser<String> parser;
 
     public OrderService(AccountRepository accountRepository,
                         SymbolRegistry symbolRegistry,
                         OrderRepository orderRepository,
                         OrderValidator orderValidator,
+                        MatchingService matchingService,
                         Parser<String> parser) {
         this.accountRepository = accountRepository;
         this.symbolRegistry = symbolRegistry;
         this.orderRepository = orderRepository;
         this.orderValidator = orderValidator;
+        this.matchingService = matchingService;
         this.parser = parser;
     }
 
@@ -50,6 +54,7 @@ public class OrderService {
 
         Order order = Order.create(orderRequest.accountId(), symbol, orderRequest.side(), orderRequest.price(), orderRequest.quantity());
         orderRepository.add(order);
+        List<Trade> matchResult = matchingService.match(order);
     }
 
     // ================ private method ==================
