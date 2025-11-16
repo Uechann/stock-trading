@@ -65,4 +65,8 @@ public class OrderBook {
         }
         return trades;
     }
+
+    public Symbol getSymbol() {
+        return symbol;
+    }
 }

@@ -2,6 +2,7 @@ package stockTrading.domain.service;
 
 import stockTrading.domain.model.*;
 import stockTrading.domain.repository.AccountRepository;
+import stockTrading.domain.repository.OrderBookRepository;
 import stockTrading.domain.repository.SymbolRegistry;
 import stockTrading.global.util.Parser;
 
@@ -13,13 +14,17 @@ public class InitialService {
 
     private final SymbolRegistry symbolRegistry;
     private final AccountRepository accountRepository;
+    private final OrderBookRepository orderBookRepository;
     private final Parser<String> symbolParser;
     private final Parser<String> quantityParser;
 
+
     public InitialService(SymbolRegistry symbolRegistry, AccountRepository accountRepository,
+                          OrderBookRepository orderBookRepository,
                           Parser<String> symbolParser, Parser<String> quantityParser) {
         this.symbolRegistry = symbolRegistry;
         this.accountRepository = accountRepository;
+        this.orderBookRepository = orderBookRepository;
         this.symbolParser = symbolParser;
         this.quantityParser = quantityParser;
     }
@@ -29,7 +34,10 @@ public class InitialService {
         List<String> symbolNames = symbolParser.parse(symbolsInput);
         symbolNames.stream()
                 .map(Symbol::new)
-                .forEach(symbolRegistry::add);
+                .forEach(symbol -> {
+                    symbolRegistry.add(symbol);
+                    orderBookRepository.add(new OrderBook(symbol));
+                });
     }
 
     // 계좌 생성
