@@ -29,6 +29,14 @@ public class AccountSymbol {
         return new AccountSymbol(symbol, quantity);
     }
 
+    public void increaseQuantity(int quantity) {
+        this.quantity += quantity;
+    }
+
+    public void decreaseQuantity(int quantity) {
+        this.quantity -= quantity;
+    }
+
     // =============== private metohd =====================
 
     private static void validateAccountSymbolQuantity(int quantity) {

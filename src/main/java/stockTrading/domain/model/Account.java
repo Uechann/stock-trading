@@ -32,6 +32,19 @@ public class Account {
         return accountSymbols.getQuantity(symbol);
     }
 
+    // Trade 객체를 받아서 정산 적용
+    public void applyTrade(Trade trade) {
+        if (trade.getBuyerAccountId().equals(id)) {
+            funds -= trade.getPrice() * trade.getQuantity();
+            accountSymbols.incrementQuantity(trade.getSymbol(), trade.getQuantity());
+        }
+
+        if (trade.getSellerAccountId().equals(id)) {
+            funds += trade.getPrice() * trade.getQuantity();
+            accountSymbols.decrementQuantity(trade.getSymbol(), trade.getQuantity());
+        }
+    }
+
     @Override
     public boolean equals(Object obj) {
         return id.equals((String) obj);

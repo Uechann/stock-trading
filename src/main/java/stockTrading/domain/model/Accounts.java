@@ -8,7 +8,7 @@ import static stockTrading.global.Exception.ErrorMessage.ACCOUNT_DUPLICATED;
 
 public class Accounts {
 
-    private Map<String, Account> values = new HashMap<>();
+    private final Map<String, Account> values = new HashMap<>();
 
     public Accounts() {}
 

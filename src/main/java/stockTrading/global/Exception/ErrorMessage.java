@@ -34,7 +34,11 @@ public enum ErrorMessage {
     ORDER_ACCOUNT_SYMBOL_QUANTITY_IS_LEAK("[ERROR] 계좌 종목 보유량이 부족합니다."),
 
     // 매칭
-    ORDER_BOOK_SYMBOL_NOT_FOUND("[ERROR] 해당 종목이 없습니다.");
+    ORDER_BOOK_SYMBOL_NOT_FOUND("[ERROR] 해당 종목이 없습니다."),
+
+    // 정산
+    ACCOUNT_FUNDS_IS_NOT_ENOUGH("[ERROR] 정산 중 계좌 잔고가 부족합니다."),
+    ACCOUNT_SYMBOL_QUANTITY_IS_NOT_ENOUGH("[ERROR] 정산 중 계좌 종목 보유량이 부족합니다.");
 
     private String message;
 
