@@ -48,7 +48,7 @@ public class OrderServiceTest {
     void notExistAccountTest() {
         String orderInput = "3333-12-1234567 APPL BUY 150 50";
         assertThatThrownBy(() ->
-                orderService.createOrder(orderInput)
+                orderService.startOrder(orderInput)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -57,7 +57,7 @@ public class OrderServiceTest {
     void notExistSymbolTest() {
         String orderInput = "3333-12-1234567 TSLA BUY 150 50";
         assertThatThrownBy(() ->
-                orderService.createOrder(orderInput)
+                orderService.startOrder(orderInput)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

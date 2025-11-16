@@ -34,7 +34,7 @@ public class OrderService {
         this.parser = parser;
     }
 
-    public void createOrder(String orderInput) {
+    public void startOrder(String orderInput) {
         OrderRequest orderRequest = OrderRequest.of(parser.parse(orderInput));
 
         Account account = findByAccountId(orderRequest);

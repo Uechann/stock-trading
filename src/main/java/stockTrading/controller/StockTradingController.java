@@ -27,7 +27,7 @@ public class StockTradingController {
 
     public void run() {
         initialize();
-        inputAndCreateOrder();
+        inputAndStartOrder();
 
         // 매칭
 
@@ -38,9 +38,15 @@ public class StockTradingController {
 
     // ===================== private method ========================
 
-    private void inputAndCreateOrder() {
-        String orderInput = retryUntilValid(inputView::inputOrder, InputValidator::validateOrder);
-        orderService.createOrder(orderInput);
+    private void inputAndStartOrder() {
+        while (true) {
+            String orderInput = retryUntilValid(inputView::inputOrder, InputValidator::validateOrder);
+            if (orderInput.equals("END")) {
+                break;
+            }
+            
+            orderService.startOrder(orderInput);
+        }
     }
 
     private void initialize() {
@@ -54,7 +60,7 @@ public class StockTradingController {
     }
 
     private void initialAccount() {
-        while(true) {
+        while (true) {
             String accountId = retryUntilValid(inputView::inputAccounts, InputValidator::validateGlobalEmptyOrBlank);
             if (accountId.equals("NEXT")) {
                 break;
