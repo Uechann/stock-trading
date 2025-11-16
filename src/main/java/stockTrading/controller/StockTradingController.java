@@ -2,7 +2,6 @@ package stockTrading.controller;
 
 import stockTrading.domain.model.Account;
 import stockTrading.domain.service.InitialService;
-import stockTrading.domain.service.MatchingService;
 import stockTrading.domain.service.OrderService;
 import stockTrading.global.util.InputValidator;
 import stockTrading.view.InputView;
@@ -28,7 +27,7 @@ public class StockTradingController {
         inputAndStartOrder();
     }
 
-    // ===================== private method ========================
+// ===================== private method ========================
 
     private void inputAndStartOrder() {
         while (true) {
@@ -36,7 +35,6 @@ public class StockTradingController {
             if (orderInput.equals("END")) {
                 break;
             }
-            
             orderService.startOrder(orderInput);
         }
     }

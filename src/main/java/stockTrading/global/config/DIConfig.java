@@ -6,10 +6,7 @@ import stockTrading.domain.repository.AccountRepository;
 import stockTrading.domain.repository.OrderBookRepository;
 import stockTrading.domain.repository.OrderRepository;
 import stockTrading.domain.repository.SymbolRegistry;
-import stockTrading.domain.service.InitialService;
-import stockTrading.domain.service.MatchingService;
-import stockTrading.domain.service.OrderService;
-import stockTrading.domain.service.OrderValidator;
+import stockTrading.domain.service.*;
 import stockTrading.global.util.OrderParser;
 import stockTrading.global.util.Parser;
 import stockTrading.global.util.SymbolParser;
@@ -73,6 +70,10 @@ public final class DIConfig {
         return new MatchingService(orderBookRepository());
     }
 
+    public SettlementService settlementService() {
+        return new SettlementService(accountRepository());
+    }
+
     public OrderService orderService() {
         return new OrderService(
                 accountRepository(),
@@ -80,6 +81,7 @@ public final class DIConfig {
                 orderRepository(),
                 orderValidator(),
                 matchingService(),
+                settlementService(),
                 OrderParser()
         );
     }

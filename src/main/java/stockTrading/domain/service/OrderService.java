@@ -22,6 +22,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderValidator orderValidator;
     private final MatchingService matchingService;
+    private final SettlementService settlementService;
     private final Parser<String> parser;
 
     public OrderService(AccountRepository accountRepository,
@@ -29,12 +30,14 @@ public class OrderService {
                         OrderRepository orderRepository,
                         OrderValidator orderValidator,
                         MatchingService matchingService,
+                        SettlementService settlementService,
                         Parser<String> parser) {
         this.accountRepository = accountRepository;
         this.symbolRegistry = symbolRegistry;
         this.orderRepository = orderRepository;
         this.orderValidator = orderValidator;
         this.matchingService = matchingService;
+        this.settlementService = settlementService;
         this.parser = parser;
     }
 
@@ -55,8 +58,7 @@ public class OrderService {
         Order order = Order.create(orderRequest.accountId(), symbol, orderRequest.side(), orderRequest.price(), orderRequest.quantity());
         orderRepository.add(order);
         List<Trade> matchResult = matchingService.match(order);
-
-
+        settlementService.settle(matchResult);
     }
 
     // ================ private method ==================

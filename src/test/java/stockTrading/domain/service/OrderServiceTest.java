@@ -36,6 +36,7 @@ public class OrderServiceTest {
                 new InMemoryOrderRepository(),
                 orderValidator,
                 new MatchingService(new InMemoryOrderBookRepository()),
+                new SettlementService(accountRepository),
                 new OrderParser()
         );
 

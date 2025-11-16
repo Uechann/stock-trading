@@ -5,7 +5,6 @@ import stockTrading.domain.model.Trade;
 import stockTrading.domain.repository.AccountRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 import static stockTrading.global.Exception.ErrorMessage.*;
 
@@ -18,7 +17,6 @@ public class SettlementService {
     }
 
     public void settle(List<Trade> trades) {
-
         // 매치 결과 Trade를 통해 매수자와 매도자의 가격과 수량 검증
         for (Trade trade : trades) {
             Account buyer = getBuyer(trade);
