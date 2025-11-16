@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import stockTrading.domain.model.*;
 import stockTrading.domain.repository.AccountRepository;
-import stockTrading.domain.repository.SymbolRegistry;
 import stockTrading.dto.OrderRequest;
 import stockTrading.infra.InMemoryAccountRepository;
 
