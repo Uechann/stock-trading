@@ -13,7 +13,8 @@ public class OrderValidator {
     private static final int QUANTITY_UPPER = 10_000;
     private static final int TOTAL_PRICE_UPPER = 10_000_000;
 
-    public OrderValidator() {}
+    public OrderValidator() {
+    }
 
     public void validate(Account account, Symbol symbol, String side, int price, int quantity) {
         // BUY SELL 검증
@@ -26,7 +27,7 @@ public class OrderValidator {
     }
 
     private static void validateSide(String side) {
-        if (!side.equals("BUY") || !side.equals("SELL")) {
+        if (!(side.equals("BUY") || side.equals("SELL"))) {
             throw new IllegalArgumentException(ORDER_SIDE_IS_NOT_ALLOWED.getMessage());
         }
     }
