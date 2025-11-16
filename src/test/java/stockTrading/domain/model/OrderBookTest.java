@@ -3,6 +3,8 @@ package stockTrading.domain.model;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderBookTest {
@@ -12,10 +14,10 @@ public class OrderBookTest {
     void matchTest() {
         // given
         // 주문 한개의 OrderBook 한개 생성 후 주문들을 추가
-        Symbol appl = new Symbol("apple");
-        OrderBook orderBook = new OrderBook(appl);
-        Order order1 = Order.create("3333-11-1234567", appl, "BUY", 10000, 10);
-        Order order2 = Order.create("3333-22-1234567", appl, "SELL", 8000, 5);
+        Symbol apple = new Symbol("APPL");
+        OrderBook orderBook = new OrderBook(apple);
+        Order order1 = Order.create("3333-11-1234567", apple, "BUY", 10000, 10);
+        Order order2 = Order.create("3333-22-1234567", apple, "SELL", 8000, 5);
         orderBook.add(order1);
         orderBook.add(order2);
 
@@ -26,9 +28,9 @@ public class OrderBookTest {
         // then
         assertThat(result).isNotNull();
         assertThat(result).hasSize(1);
-        assertThat(result.getFirst().getBuier()).isEqualTo("3333-11-1234567");
-        assertThat(result.getFirst().getSeller()).isEqualTo("3333-22-1234567");
-        assertThat(result.getFirst().getSymbol()).isEqualTo(appl);
+        assertThat(result.getFirst().getBuyerAccountId()).isEqualTo("3333-11-1234567");
+        assertThat(result.getFirst().getSellerAccountId()).isEqualTo("3333-22-1234567");
+        assertThat(result.getFirst().getSymbol()).isEqualTo(apple);
         assertThat(result.getFirst().getPrice()).isEqualTo(8000);
         assertThat(result.getFirst().getQuantity()).isEqualTo(5);
     }

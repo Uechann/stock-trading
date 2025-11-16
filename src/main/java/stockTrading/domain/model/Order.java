@@ -28,6 +28,17 @@ public class Order {
         this.orderDate = orderDate;
     }
 
+    public void decrementRemainingQuantity(int quantity) {
+        this.remainingQuantity -= quantity;
+        if (this.remainingQuantity == 0) {
+            this.status = OrderStatus.COMPLETED;
+        }
+    }
+
+    public boolean isCompleted() {
+        return this.status == OrderStatus.COMPLETED;
+    }
+
     public int getRemainingQuantity() {
         return remainingQuantity;
     }

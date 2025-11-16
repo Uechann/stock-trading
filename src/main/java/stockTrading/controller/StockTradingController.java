@@ -2,6 +2,7 @@ package stockTrading.controller;
 
 import stockTrading.domain.model.Account;
 import stockTrading.domain.service.InitialService;
+import stockTrading.domain.service.MatchingService;
 import stockTrading.domain.service.OrderService;
 import stockTrading.global.util.InputValidator;
 import stockTrading.view.InputView;
@@ -12,12 +13,14 @@ import static stockTrading.global.util.Retry.retryUntilValid;
 public class StockTradingController {
     private final InitialService initialService;
     private final OrderService orderService;
+    private final MatchingService matchingService;
     private final InputView inputView;
     private final OutputView outputView;
 
-    public StockTradingController(InitialService initialService, OrderService orderService, InputView inputView, OutputView outputView) {
+    public StockTradingController(InitialService initialService, OrderService orderService, MatchingService matchingService, InputView inputView, OutputView outputView) {
         this.initialService = initialService;
         this.orderService = orderService;
+        this.matchingService = matchingService;
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -25,6 +28,12 @@ public class StockTradingController {
     public void run() {
         initialize();
         inputAndCreateOrder();
+
+        // 매칭
+
+
+        // 정산
+
     }
 
     // ===================== private method ========================

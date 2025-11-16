@@ -6,6 +6,7 @@ import stockTrading.domain.repository.AccountRepository;
 import stockTrading.domain.repository.OrderRepository;
 import stockTrading.domain.repository.SymbolRegistry;
 import stockTrading.domain.service.InitialService;
+import stockTrading.domain.service.MatchingService;
 import stockTrading.domain.service.OrderService;
 import stockTrading.domain.service.OrderValidator;
 import stockTrading.global.util.OrderParser;
@@ -70,6 +71,10 @@ public final class DIConfig {
         );
     }
 
+    public MatchingService matchingService() {
+        return new MatchingService();
+    }
+
     public InputView inputView() {
         return new InputView();
     }
@@ -82,6 +87,7 @@ public final class DIConfig {
         return new StockTradingController(
                 initialService(),
                 orderService(),
+                matchingService(),
                 inputView(),
                 outputView());
     }
