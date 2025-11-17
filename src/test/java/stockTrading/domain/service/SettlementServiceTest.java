@@ -21,8 +21,8 @@ public class SettlementServiceTest {
     @BeforeEach
     void setUp() {
         // given
-        Account account1 = new Account("3333-11-1234567", 10_000);
-        Account account2 = new Account("3333-22-1234567", 10_000);
+        Account account1 = Account.create("3333-11-1234567", 10_000);
+        Account account2 = Account.create("3333-22-1234567", 10_000);
         accountRepository.add(account1);
         accountRepository.add(account2);
 
@@ -30,14 +30,14 @@ public class SettlementServiceTest {
         Symbol GOOG = new Symbol("GOOG");
 
         AccountSymbols accountSymbolsA = new AccountSymbols();
-        AccountSymbol accountSymbolA1 = AccountSymbol.of(APPL, 10);
-        AccountSymbol accountSymbolA2 = AccountSymbol.of(GOOG, 10);
+        AccountSymbol accountSymbolA1 = AccountSymbol.create(APPL, 10);
+        AccountSymbol accountSymbolA2 = AccountSymbol.create(GOOG, 10);
         accountSymbolsA.add(accountSymbolA1);
         accountSymbolsA.add(accountSymbolA2);
 
         AccountSymbols accountSymbolsB = new AccountSymbols();
-        AccountSymbol accountSymbolB1 = AccountSymbol.of(APPL, 10);
-        AccountSymbol accountSymbolB2 = AccountSymbol.of(GOOG, 10);
+        AccountSymbol accountSymbolB1 = AccountSymbol.create(APPL, 10);
+        AccountSymbol accountSymbolB2 = AccountSymbol.create(GOOG, 10);
         accountSymbolsB.add(accountSymbolB1);
         accountSymbolsB.add(accountSymbolB2);
 

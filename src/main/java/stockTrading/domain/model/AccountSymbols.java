@@ -10,8 +10,12 @@ public class AccountSymbols {
     public AccountSymbols() {
     }
 
-    public AccountSymbols(List<AccountSymbol> accountSymbols) {
+    private AccountSymbols(List<AccountSymbol> accountSymbols) {
         accountSymbols.forEach(symbol -> values.put(symbol.getSymbol(), symbol));
+    }
+
+    public static AccountSymbols create(List<AccountSymbol> accountSymbols) {
+        return new AccountSymbols(accountSymbols);
     }
 
     public void add(AccountSymbol accountSymbol) {

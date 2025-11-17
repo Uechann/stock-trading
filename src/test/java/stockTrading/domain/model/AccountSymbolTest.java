@@ -18,7 +18,7 @@ public class AccountSymbolTest {
     void AccountSymbolInputSuccessTest() {
 
         // when
-        AccountSymbol accountSymbol = AccountSymbol.of(symbol, 5);
+        AccountSymbol accountSymbol = AccountSymbol.create(symbol, 5);
 
         // then
         assertThat(accountSymbol.getSymbol()).isEqualTo(symbol);
@@ -31,7 +31,7 @@ public class AccountSymbolTest {
     void AccountSymbolInputFailTest(int quantity) {
 
         assertThatThrownBy(() ->
-                AccountSymbol.of(symbol, quantity)
+                AccountSymbol.create(symbol, quantity)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

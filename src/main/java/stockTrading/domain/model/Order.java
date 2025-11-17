@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class Order {
 
-    private final UUID orderId;
+    private final Long orderId;
     private final String accountId;
     private final Symbol symbol;
     private final String side;
@@ -16,7 +16,7 @@ public class Order {
     private OrderStatus status;
     private final LocalDateTime orderDate;
 
-    private Order(UUID orderId, String accountId, Symbol symbol, String side, int price, int quantity, LocalDateTime orderDate) {
+    private Order(Long orderId, String accountId, Symbol symbol, String side, int price, int quantity, LocalDateTime orderDate) {
         this.orderId = orderId;
         this.accountId = accountId;
         this.symbol = symbol;
@@ -26,6 +26,12 @@ public class Order {
         this.remainingQuantity = quantity;
         this.status = OrderStatus.PENDING;
         this.orderDate = orderDate;
+    }
+
+    public static Order create(String accountId, Symbol symbol, String side, int price, int quantity) {
+        Long orderId = 
+        LocalDateTime orderDate = LocalDateTime.now();
+        return new Order(orderId, accountId, symbol, side, price, quantity, orderDate);
     }
 
     public void decrementRemainingQuantity(int quantity) {
@@ -49,12 +55,6 @@ public class Order {
 
     public LocalDateTime getOrderDate() {
         return orderDate;
-    }
-
-    public static Order create(String accountId, Symbol symbol, String side, int price, int quantity) {
-        UUID orderId = UUID.randomUUID();
-        LocalDateTime orderDate = LocalDateTime.now();
-        return new Order(orderId, accountId, symbol, side, price, quantity, orderDate);
     }
 
     public UUID getOrderId() {

@@ -24,7 +24,7 @@ public class AccountSymbol {
         return quantity;
     }
 
-    public static AccountSymbol of(Symbol symbol, int quantity) {
+    public static AccountSymbol create(Symbol symbol, int quantity) {
         validateAccountSymbolQuantity(quantity);
         return new AccountSymbol(symbol, quantity);
     }

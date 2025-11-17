@@ -34,23 +34,23 @@ public class OrderServiceTest {
         symbolRegistry = new SymbolRegistry(symbols);
         orderRepository = new InMemoryOrderRepository();
         orderBookRepository = new InMemoryOrderBookRepository();
-        orderBookRepository.add(new OrderBook(new Symbol("APPL")));
-        orderBookRepository.add(new OrderBook(new Symbol("GOOG")));
+        orderBookRepository.add(OrderBook.create(new Symbol("APPL")));
+        orderBookRepository.add(OrderBook.create(new Symbol("GOOG")));
 
         // 계좌 초기화
-        Account accountA = new Account("3333-11-1234567", 4_000_000);
-        Account accountB = new Account("3333-22-1234567", 4_000_000);
+        Account accountA = Account.create("3333-11-1234567", 4_000_000);
+        Account accountB = Account.create("3333-22-1234567", 4_000_000);
         accountRepository.add(accountA);
         accountRepository.add(accountB);
 
         // 계좌 종목 초기화
-        AccountSymbol accountSymbol1 = AccountSymbol.of(new Symbol("APPL"), 10);
+        AccountSymbol accountSymbol1 = AccountSymbol.create(new Symbol("APPL"), 10);
         AccountSymbols accountSymbols1 = new AccountSymbols();
         accountSymbols1.add(accountSymbol1);
         accountA.initializeSymbolQuantities(accountSymbols1);
 
         AccountSymbols accountSymbols2 = new AccountSymbols();
-        AccountSymbol accountSymbol2 = AccountSymbol.of(new Symbol("APPL"), 10);
+        AccountSymbol accountSymbol2 = AccountSymbol.create(new Symbol("APPL"), 10);
         accountSymbols2.add(accountSymbol2);
         accountB.initializeSymbolQuantities(accountSymbols2);
 

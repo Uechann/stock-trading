@@ -36,14 +36,14 @@ public class InitialService {
                 .map(Symbol::new)
                 .forEach(symbol -> {
                     symbolRegistry.add(symbol);
-                    orderBookRepository.add(new OrderBook(symbol));
+                    orderBookRepository.add(OrderBook.create(symbol));
                 });
     }
 
     // 계좌 생성
     public Account createAccountWithFunds(String accountId, String accountFunds) {
         // 계좌 생성 및 자금 초기화
-        Account account = new Account(accountId, Integer.parseInt(accountFunds));
+        Account account = Account.create(accountId, Integer.parseInt(accountFunds));
         accountRepository.add(account);
         return account;
     }
@@ -59,7 +59,7 @@ public class InitialService {
             String quantity = symbolQuantity.get(1);
 
             validateSymbolExist(symbolQuantity.getFirst());
-            accountSymbols.add(AccountSymbol.of(new Symbol(symbol), Integer.parseInt(quantity)));
+            accountSymbols.add(AccountSymbol.create(new Symbol(symbol), Integer.parseInt(quantity)));
             account.initializeSymbolQuantities(accountSymbols);
         }
     }

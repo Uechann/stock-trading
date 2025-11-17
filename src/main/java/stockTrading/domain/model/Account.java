@@ -10,10 +10,14 @@ public class Account {
     private int funds;
     private AccountSymbols accountSymbols;
 
-    public Account(String id, int funds) {
-        validate(id, funds);
+    private Account(String id, int funds) {
         this.id = id;
         this.funds = funds;
+    }
+
+    public static Account create(String id, int funds) {
+        validate(id, funds);
+        return new Account(id, funds);
     }
 
     public String getId() {

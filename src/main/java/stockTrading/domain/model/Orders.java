@@ -6,9 +6,11 @@ import java.util.UUID;
 
 public class Orders {
 
-    private Map<UUID, Order> orders = new HashMap<>();
+    private Map<UUID, Order> orders;
 
-    public Orders() {}
+    public Orders() {
+        orders = new HashMap<>();
+    }
 
     public void add(Order order) {
         orders.put(order.getOrderId(), order);

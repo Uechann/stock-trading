@@ -4,12 +4,12 @@ import java.time.LocalDateTime;
 
 public class Trade {
 
-    private String buyerAccountId;
-    private String sellerAccountId;
-    private Symbol symbol;
-    private int price;
-    private int quantity;
-    private LocalDateTime createdAt;
+    private final String buyerAccountId;
+    private final String sellerAccountId;
+    private final Symbol symbol;
+    private final int price;
+    private final int quantity;
+    private final LocalDateTime createdAt;
 
     private Trade(String buyerAccountId, String sellerAccountId, Symbol symbol, int price, int quantity) {
         this.buyerAccountId = buyerAccountId;

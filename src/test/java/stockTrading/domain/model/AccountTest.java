@@ -15,7 +15,7 @@ public class AccountTest {
     @Test
     @DisplayName("계좌 번호 입력 성공 테스트")
     void accountInputSuccessTest() {
-        Account account = new Account("3333-12-1234567", 0);
+        Account account = Account.create("3333-12-1234567", 0);
         assertThat(account.getId()).isEqualTo("3333-12-1234567");
     }
 
@@ -24,14 +24,14 @@ public class AccountTest {
     @DisplayName("계좌번호 입력 형식 실패 테스트")
     void accountInputFailTest(String input) {
         assertThatThrownBy(() ->
-                new Account(input, 0)
+                Account.create(input, 0)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("초기 자금 초기화 성공 테스트")
     void accountFundsInitializeTest() {
-        Account account = new Account("3333-12-1234567", 1_000_000);
+        Account account = Account.create("3333-12-1234567", 1_000_000);
 
         assertThat(account.getFunds()).isEqualTo(1_000_000);
     }
@@ -42,7 +42,7 @@ public class AccountTest {
     void accountFundsInitializeFailTest(int funds) {
 
         assertThatThrownBy(() ->
-                new Account("3333-12-1234567", funds)
+                Account.create("3333-12-1234567", funds)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -50,13 +50,13 @@ public class AccountTest {
     @DisplayName("계좌 종목 보유 수량 성공 테스트 ")
     void accountSymbolQuantitySuccessTest() {
         // given
-        Account account = new Account("3333-12-1234567", 0);
+        Account account = Account.create("3333-12-1234567", 0);
         Symbol apple = new Symbol("APPL");
         Symbol google = new Symbol("GOOG");
 
         // when
-        AccountSymbol accountSymbol1 = AccountSymbol.of(apple, 50);
-        AccountSymbol accountSymbol2 = AccountSymbol.of(google, 30);
+        AccountSymbol accountSymbol1 = AccountSymbol.create(apple, 50);
+        AccountSymbol accountSymbol2 = AccountSymbol.create(google, 30);
         AccountSymbols accountSymbols = new AccountSymbols();
         accountSymbols.add(accountSymbol1);
         accountSymbols.add(accountSymbol2);

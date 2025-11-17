@@ -12,11 +12,11 @@ public class Accounts {
 
     public Accounts() {}
 
-    public Accounts(List<Account> accounts) {
+    private Accounts(List<Account> accounts) {
         accounts.forEach(account -> values.put(account.getId(), account));
     }
 
-    public static Accounts of(List<Account> accounts) {
+    public static Accounts create(List<Account> accounts) {
         validate(accounts);
         return new Accounts(accounts);
     }

@@ -15,7 +15,7 @@ public class OrderBookTest {
         // given
         // 주문 한개의 OrderBook 한개 생성 후 주문들을 추가
         Symbol apple = new Symbol("APPL");
-        OrderBook orderBook = new OrderBook(apple);
+        OrderBook orderBook = OrderBook.create(apple);
         Order order1 = Order.create("3333-11-1234567", apple, "BUY", 10000, 10);
         Order order2 = Order.create("3333-22-1234567", apple, "SELL", 8000, 5);
         orderBook.add(order1);

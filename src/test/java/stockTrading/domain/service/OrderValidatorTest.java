@@ -19,21 +19,21 @@ public class OrderValidatorTest {
     void setUp() {
         // given
         accountRepository = new InMemoryAccountRepository();
-        Account accountA = new Account("3333-11-1234567", 4_000_000);
-        Account accountB = new Account("3333-22-1234567", 4_000_000);
+        Account accountA = Account.create("3333-11-1234567", 4_000_000);
+        Account accountB = Account.create("3333-22-1234567", 4_000_000);
         accountRepository.add(accountA);
         accountRepository.add(accountB);
 
         AccountSymbols accountSymbolsA = new AccountSymbols();
-        AccountSymbol accountSymbolA1 = AccountSymbol.of(new Symbol("APPL"), 100);
-        AccountSymbol accountSymbolA2 = AccountSymbol.of(new Symbol("GOOG"), 100);
+        AccountSymbol accountSymbolA1 = AccountSymbol.create(new Symbol("APPL"), 100);
+        AccountSymbol accountSymbolA2 = AccountSymbol.create(new Symbol("GOOG"), 100);
         accountSymbolsA.add(accountSymbolA1);
         accountSymbolsA.add(accountSymbolA2);
         accountA.initializeSymbolQuantities(accountSymbolsA);
 
         AccountSymbols accountSymbolsB = new AccountSymbols();
-        AccountSymbol accountSymbol1B1 = AccountSymbol.of(new Symbol("APPL"), 100);
-        AccountSymbol accountSymbol1B2 = AccountSymbol.of(new Symbol("GOOG"), 100);
+        AccountSymbol accountSymbol1B1 = AccountSymbol.create(new Symbol("APPL"), 100);
+        AccountSymbol accountSymbol1B2 = AccountSymbol.create(new Symbol("GOOG"), 100);
         accountSymbolsB.add(accountSymbol1B1);
         accountSymbolsB.add(accountSymbol1B2);
         accountB.initializeSymbolQuantities(accountSymbolsB);

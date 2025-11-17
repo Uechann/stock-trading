@@ -17,10 +17,14 @@ public class OrderBook {
             Comparator.comparing(Order::getPrice)
                     .thenComparing(Order::getOrderDate);
 
-    public OrderBook(Symbol symbol) {
+    private OrderBook(Symbol symbol) {
         this.symbol = symbol;
         this.buyOrders = new PriorityQueue<>(BUY_ORDER_COMPARATOR);
         this.sellOrders = new PriorityQueue<>(SELL_ORDER_COMPARATOR);
+    }
+
+    public static OrderBook create(Symbol symbol) {
+        return new OrderBook(symbol);
     }
 
     public void add(Order order) {
