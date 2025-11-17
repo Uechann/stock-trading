@@ -66,8 +66,8 @@ public final class DIConfig {
                 symbolQuantityParser());
     }
 
-    public MatchingService matchingService() {
-        return new MatchingService(
+    public TradeService matchingService() {
+        return new TradeService(
                 orderRepository(),
                 orderBookRepository()
         );

@@ -32,10 +32,19 @@ public class StockTradingController {
 
     private void inputAndStartOrder() {
         while (true) {
-            String orderInput = retryUntilValid(inputView::inputOrder, InputValidator::validateOrder);
+            String orderInput = retry(() -> {
+                String inputOrder = inputView.inputOrder();
+                if (inputOrder.equals("END")) {
+                    return "END";
+                }
+                InputValidator.validateOrder(inputOrder);
+                return inputOrder;
+            });
+
             if (orderInput.equals("END")) {
                 break;
             }
+
             retry(() -> {
                 orderService.startOrder(orderInput);
                 return true;
@@ -59,21 +68,21 @@ public class StockTradingController {
 
     private void initialAccount() {
         while (true) {
-            String accountId = retry(() -> {
+            Account account = retry(() -> {
                 String inputAccounts = inputView.inputAccounts();
+                if (inputAccounts.equals("NEXT")) {
+                    return null;
+                }
+
+                String inputFunds = inputView.inputAccountFunds();
                 InputValidator.validateGlobalEmptyOrBlank(inputAccounts);
-                return inputAccounts;
+                InputValidator.validateFunds(inputFunds);
+                return initialService.createAccountWithFunds(inputAccounts, inputFunds);
             });
 
-            if (accountId.equals("NEXT")) {
+            if (account == null) {
                 break;
             }
-
-            Account account = retry(() -> {
-                String inputFunds = inputView.inputAccountFunds();
-                InputValidator.validateFunds(inputFunds);
-                return initialService.createAccountWithFunds(accountId, inputFunds);
-            });
 
             retry(() -> {
                 String accountSymbols = inputView.inputAccountSymbolQuantity();

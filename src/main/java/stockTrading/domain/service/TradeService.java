@@ -8,22 +8,20 @@ import stockTrading.domain.repository.OrderBookRepository;
 import stockTrading.domain.repository.OrderRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 import static stockTrading.global.Exception.ErrorMessage.*;
 
-public class MatchingService {
+public class TradeService {
 
     // OrderBook 레포
     // Trading 레포 의존성
     private final OrderRepository orderRepository;
     private final OrderBookRepository orderBookRepository;
 
-    public MatchingService(OrderRepository orderRepository, OrderBookRepository orderBookRepository) {
+    public TradeService(OrderRepository orderRepository, OrderBookRepository orderBookRepository) {
         this.orderRepository = orderRepository;
         this.orderBookRepository = orderBookRepository;
     }
-
 
     public List<Trade> match(Order order) {
         // symbol 을 통해 OrderBook 찾고 orderBook.match() 실행
@@ -45,6 +43,8 @@ public class MatchingService {
         orderBook.removeOrder(orderId);
     }
 
+    // ============= private method ====================
+
     private static void validateOrderStatus(Order order) {
         if (!order.getStatus().equals(OrderStatus.PENDING)) {
             throw new IllegalArgumentException(ORDER_CAN_NOT_CANCEL.getMessage());
@@ -55,8 +55,6 @@ public class MatchingService {
         return orderBookRepository.findBySymbol(order.getSymbol())
                 .orElseThrow(() -> new IllegalArgumentException(ORDER_BOOK_SYMBOL_NOT_FOUND.getMessage()));
     }
-
-    // ============= private method ====================
 
     private OrderBook findOrderBookBySymbol(Order order) {
         return orderBookRepository.findBySymbol(order.getSymbol())

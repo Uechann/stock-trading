@@ -61,7 +61,7 @@ public class OrderServiceTest {
                 symbolRegistry,
                 orderRepository,
                 orderValidator,
-                new MatchingService(orderRepository, orderBookRepository),
+                new TradeService(orderRepository, orderBookRepository),
                 new SettlementService(accountRepository),
                 new OrderParser()
         );

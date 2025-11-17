@@ -20,7 +20,7 @@ public class OrderService {
     private final SymbolRegistry symbolRegistry;
     private final OrderRepository orderRepository;
     private final OrderValidator orderValidator;
-    private final MatchingService matchingService;
+    private final TradeService tradeService;
     private final SettlementService settlementService;
     private final Parser<String> parser;
 
@@ -28,14 +28,14 @@ public class OrderService {
                         SymbolRegistry symbolRegistry,
                         OrderRepository orderRepository,
                         OrderValidator orderValidator,
-                        MatchingService matchingService,
+                        TradeService tradeService,
                         SettlementService settlementService,
                         Parser<String> parser) {
         this.accountRepository = accountRepository;
         this.symbolRegistry = symbolRegistry;
         this.orderRepository = orderRepository;
         this.orderValidator = orderValidator;
-        this.matchingService = matchingService;
+        this.tradeService = tradeService;
         this.settlementService = settlementService;
         this.parser = parser;
     }
@@ -44,8 +44,7 @@ public class OrderService {
         // 주문 취소 기능
         if (orderInput.startsWith("CANCEL")) {
             String orderId = orderInput.split(" ")[1];
-
-            matchingService.cancelOrder(Long.parseLong(orderId));
+            tradeService.cancelOrder(Long.parseLong(orderId));
             return;
         }
 
@@ -64,7 +63,7 @@ public class OrderService {
 
         Order order = Order.create(orderRequest.accountId(), symbol, orderRequest.side(), orderRequest.price(), orderRequest.quantity());
         orderRepository.add(order);
-        List<Trade> matchResult = matchingService.match(order);
+        List<Trade> matchResult = tradeService.match(order);
         settlementService.settle(matchResult);
     }
 
