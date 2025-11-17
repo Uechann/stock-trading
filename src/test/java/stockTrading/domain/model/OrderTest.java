@@ -30,4 +30,24 @@ public class OrderTest {
         assertThat(order.getRemainingQuantity()).isEqualTo(50);
         assertThat(order.getStatus()).isEqualTo(OrderStatus.PENDING);
     }
+
+    // 주문 취소 시 상태 변경이 되는지 검증하는 테스트
+    @Test
+    @DisplayName("주문 취소시 상태 변경 되는지 검증하는 테스트")
+    void orderCancelTest() {
+        // given
+        Order order = Order.create(
+                "3333-12-1234567",
+                new Symbol("APPL"),
+                "BUY",
+                100,
+                10
+        );
+
+        // when
+        order.cancel();
+
+        // then
+        assertThat(order.getStatus()).isEqualTo(OrderStatus.CANCELLED);
+    }
 }

@@ -250,6 +250,8 @@ Controll, service, 등 의존성 DI 컨테이너 구현합니다.
 세부 구현
 - CANCEL <ORDER_ID> 명령어를 통한 주문 취소 기능 구현
 - 대기중인 주문만 취소 가능
+- OrderStatus -> CANCELED로 변경
+- ORDERBOOK에서 제거 
 
 예외 상황
 - [ ] 존재하지 않는 ORDER_ID 입력 시 예외 처리

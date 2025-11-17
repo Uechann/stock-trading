@@ -6,7 +6,6 @@ import stockTrading.domain.model.Trade;
 import stockTrading.domain.repository.OrderBookRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 import static stockTrading.global.Exception.ErrorMessage.ORDER_BOOK_SYMBOL_NOT_FOUND;
 
