@@ -93,6 +93,15 @@ public final class DIConfig {
         );
     }
 
+    public SummaryService summaryService() {
+        return new SummaryService(
+                accountRepository(),
+                symbolRegistry(),
+                orderRepository(),
+                tradeRepository()
+        );
+    }
+
     public InputView inputView() {
         return new InputView();
     }
@@ -105,6 +114,7 @@ public final class DIConfig {
         return new StockTradingController(
                 initialService(),
                 orderService(),
+                summaryService(),
                 inputView(),
                 outputView());
     }

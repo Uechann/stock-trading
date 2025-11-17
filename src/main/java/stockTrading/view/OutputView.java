@@ -1,10 +1,12 @@
 package stockTrading.view;
 
+import stockTrading.dto.Summary;
+
 public class OutputView {
 
     public OutputView() {}
 
-    public void print(String message) {
-        System.out.println(message);
+    public void printSummary(Summary summary) {
+        System.out.println();
     }
 }
