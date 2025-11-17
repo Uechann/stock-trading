@@ -3,6 +3,8 @@ package stockTrading.domain.repository;
 import stockTrading.domain.model.Symbol;
 import stockTrading.domain.model.Symbols;
 
+import java.util.List;
+
 import static stockTrading.global.Exception.ErrorMessage.SYMBOL_DUPLICATED;
 
 public class SymbolRegistry {
@@ -26,5 +28,9 @@ public class SymbolRegistry {
         if (isContains(symbol)) {
             throw new IllegalArgumentException(SYMBOL_DUPLICATED.getMessage());
         }
+    }
+
+    public List<Symbol> findAll() {
+        return symbols.findAll();
     }
 }

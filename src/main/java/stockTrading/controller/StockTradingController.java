@@ -3,22 +3,26 @@ package stockTrading.controller;
 import stockTrading.domain.model.Account;
 import stockTrading.domain.service.InitialService;
 import stockTrading.domain.service.OrderService;
+import stockTrading.domain.service.SummaryService;
+import stockTrading.dto.Summary;
 import stockTrading.global.util.InputValidator;
 import stockTrading.view.InputView;
 import stockTrading.view.OutputView;
 
 import static stockTrading.global.util.Retry.retry;
-import static stockTrading.global.util.Retry.retryUntilValid;
 
 public class StockTradingController {
     private final InitialService initialService;
     private final OrderService orderService;
+    private final SummaryService summaryService;
     private final InputView inputView;
     private final OutputView outputView;
 
-    public StockTradingController(InitialService initialService, OrderService orderService, InputView inputView, OutputView outputView) {
+    public StockTradingController(InitialService initialService, OrderService orderService,
+                                  SummaryService summaryService, InputView inputView, OutputView outputView) {
         this.initialService = initialService;
         this.orderService = orderService;
+        this.summaryService = summaryService;
         this.inputView = inputView;
         this.outputView = outputView;
     }
@@ -28,8 +32,8 @@ public class StockTradingController {
         inputAndStartOrder();
 
         // 체결 결과 출력 기능
-
-
+        Summary summary = summaryService.summarize();
+        outputView.printSummary(summary);
     }
 
 // ===================== private method ========================

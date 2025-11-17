@@ -17,4 +17,10 @@ public class Trades {
     public List<Trade> findAll() {
         return Collections.unmodifiableList(trades);
     }
+
+    public List<Trade> findBySymbol(Symbol symbol) {
+        return trades.stream()
+                .filter(trade -> trade.getSymbol().equals(symbol))
+                .toList();
+    }
 }

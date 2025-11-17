@@ -2,6 +2,7 @@ package stockTrading.domain.service;
 
 import stockTrading.domain.model.Account;
 import stockTrading.domain.model.Order;
+import stockTrading.domain.model.Symbol;
 import stockTrading.domain.model.Trade;
 import stockTrading.domain.repository.AccountRepository;
 import stockTrading.domain.repository.OrderRepository;
@@ -9,7 +10,11 @@ import stockTrading.domain.repository.SymbolRegistry;
 import stockTrading.domain.repository.TradeRepository;
 import stockTrading.dto.*;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SummaryService {
 
@@ -46,7 +51,29 @@ public class SummaryService {
     }
 
     public List<SymbolSummary> summarizeSymbols() {
+        Map<Symbol, List<Trade>> symbolTrades = tradeRepository.findAll().stream()
+                .collect(Collectors.groupingBy(Trade::getSymbol));
 
+        List<SymbolSummary> symbolSummaries = new ArrayList<>();
+        // 각 종목 별 이름, 체결 건수, 평균 체결가, 최종 체결가 계산
+        symbolTrades.forEach((symbol, trades) -> {
+            Long count = (long) trades.size();
+
+            // 최종 체결가
+            Long lastPrice = (long)trades.stream()
+                    .max(Comparator.comparing(Trade::getPrice))
+                    .map(Trade::getPrice)
+                    .orElse(0);
+
+            double averagePrice = trades.stream()
+                    .mapToInt(Trade::getPrice)
+                    .average()
+                    .orElse(0);
+
+            symbolSummaries.add(SymbolSummary.create(symbol.getName(), count, averagePrice, lastPrice));
+        });
+
+        return symbolSummaries;
     }
 
     public OrderSummary summarizeOrders() {

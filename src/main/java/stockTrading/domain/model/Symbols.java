@@ -1,9 +1,6 @@
 package stockTrading.domain.model;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static stockTrading.global.Exception.ErrorMessage.SYMBOL_DUPLICATED;
 import static stockTrading.global.Exception.ErrorMessage.SYMBOL_NOT_FOUND;
@@ -31,12 +28,8 @@ public class Symbols {
         values.add(symbol);
     }
 
-    public void remove(Symbol symbol) {
-        values.remove(symbol);
-    }
-
-    public Set<Symbol> getValues() {
-        return Collections.unmodifiableSet(values);
+    public List<Symbol> findAll() {
+        return new ArrayList<>(values);
     }
 
     // =============== private method =======================

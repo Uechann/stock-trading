@@ -1,5 +1,7 @@
 package stockTrading.infra;
 
+import stockTrading.domain.model.Symbol;
+import stockTrading.domain.model.Symbols;
 import stockTrading.domain.model.Trade;
 import stockTrading.domain.model.Trades;
 import stockTrading.domain.repository.TradeRepository;
@@ -21,5 +23,10 @@ public class InMemoryTradeRepository implements TradeRepository {
     @Override
     public List<Trade> findAll() {
         return trades.findAll();
+    }
+
+    @Override
+    public List<Trade> findBySymbol(Symbol symbol) {
+        return trades.findBySymbol(symbol);
     }
 }
