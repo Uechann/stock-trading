@@ -1,5 +1,7 @@
 package stockTrading.domain.model;
 
+import stockTrading.dto.OrderRequest;
+
 import java.time.LocalDateTime;
 
 public class Order {
@@ -25,9 +27,15 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public static Order create(String accountId, Symbol symbol, String side, int price, int quantity) {
+    public static Order create(OrderRequest orderRequest) {
         LocalDateTime orderDate = LocalDateTime.now();
-        return new Order(accountId, symbol, side, price, quantity, orderDate);
+        return new Order(
+                orderRequest.accountId(),
+                new Symbol(orderRequest.symbol()),
+                orderRequest.side(),
+                orderRequest.price(),
+                orderRequest.quantity(),
+                orderDate);
     }
 
     public void decrementRemainingQuantity(int quantity) {

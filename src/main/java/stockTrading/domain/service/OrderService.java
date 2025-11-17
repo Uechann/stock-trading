@@ -49,7 +49,6 @@ public class OrderService {
         }
 
         OrderRequest orderRequest = OrderRequest.of(parser.parse(orderInput));
-
         Account account = findByAccountId(orderRequest);
         Symbol symbol = new Symbol(orderRequest.symbol());
         validateSymbol(symbol);
@@ -61,7 +60,7 @@ public class OrderService {
                 orderRequest.price(),
                 orderRequest.quantity());
 
-        Order order = Order.create(orderRequest.accountId(), symbol, orderRequest.side(), orderRequest.price(), orderRequest.quantity());
+        Order order = Order.create(orderRequest);
         orderRepository.add(order);
         List<Trade> matchResult = tradeService.match(order);
         settlementService.settle(matchResult);
