@@ -12,7 +12,7 @@ public record OrderRequest(
         int quantity
 ) {
 
-    public static OrderRequest of(List<String> orderInput) {
+    public static OrderRequest create(List<String> orderInput) {
         validateSize(orderInput);
         return new OrderRequest(
                 orderInput.get(1),
