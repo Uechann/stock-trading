@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Test;
 import stockTrading.domain.model.Order;
 import stockTrading.domain.model.Symbol;
 import stockTrading.domain.repository.OrderRepository;
+import stockTrading.dto.OrderRequest;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -16,21 +20,12 @@ public class InMemoryOrderRepositoryTest {
     @DisplayName("Order 객체 생성후 id 값 자동으로 저장 되는지 검증하는 테스트 코드")
     void orderSaveTest() {
         // given
-        Order order1 = Order.create(
-                "3333-12-1234567",
-                new Symbol("APPL"),
-                "BUY",
-                1000,
-                10
-        );
 
-        Order order2 = Order.create(
-                "3333-12-1234567",
-                new Symbol("APPL"),
-                "BUY",
-                1000,
-                10
-        );
+        List<String> orderInput = Arrays.stream("ORDER 3333-11-1234567 APPL BUY 1000 10".split(" "))
+                .toList();
+        OrderRequest orderRequest = OrderRequest.of(orderInput);
+        Order order1 = Order.create(orderRequest);
+        Order order2 = Order.create(orderRequest);
 
         // when
         orderRepository.add(order1);

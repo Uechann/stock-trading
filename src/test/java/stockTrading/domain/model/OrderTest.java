@@ -4,6 +4,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import stockTrading.dto.OrderRequest;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class OrderTest {
@@ -20,7 +23,7 @@ public class OrderTest {
 
         Symbol symbol = new Symbol("APPL");
 
-        Order order = Order.create(orderRequest.accountId(), symbol, orderRequest.side(), orderRequest.price(), orderRequest.quantity());
+        Order order = Order.create(orderRequest);
         assertThat(order).isNotNull();
         assertThat(order.getAccount()).isEqualTo(orderRequest.accountId());
         assertThat(order.getSymbol()).isEqualTo(symbol);
@@ -36,13 +39,10 @@ public class OrderTest {
     @DisplayName("주문 취소시 상태 변경 되는지 검증하는 테스트")
     void orderCancelTest() {
         // given
-        Order order = Order.create(
-                "3333-12-1234567",
-                new Symbol("APPL"),
-                "BUY",
-                100,
-                10
-        );
+        List<String> orderInput = Arrays.stream("ORDER 3333-11-1234567 APPL BUY 1000 10".split(" "))
+                .toList();
+        OrderRequest orderRequest = OrderRequest.of(orderInput);
+        Order order = Order.create(orderRequest);
 
         // when
         order.cancel();

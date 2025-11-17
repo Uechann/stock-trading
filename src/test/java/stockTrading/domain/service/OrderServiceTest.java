@@ -8,10 +8,14 @@ import stockTrading.domain.repository.AccountRepository;
 import stockTrading.domain.repository.OrderBookRepository;
 import stockTrading.domain.repository.OrderRepository;
 import stockTrading.domain.repository.SymbolRegistry;
+import stockTrading.dto.OrderRequest;
 import stockTrading.global.util.OrderParser;
 import stockTrading.infra.InMemoryAccountRepository;
 import stockTrading.infra.InMemoryOrderBookRepository;
 import stockTrading.infra.InMemoryOrderRepository;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -90,13 +94,11 @@ public class OrderServiceTest {
     @DisplayName("주문 id로 주문을 취소가 성공되는 지 테스트 코드 작성")
     void orderCancelTest() {
         // given
-        Order order = Order.create(
-                "3333-11-1234567",
-                new Symbol("APPL"),
-                "BUY",
-                10_000,
-                10
-        );
+        List<String> orderInput = Arrays.stream("ORDER 3333-11-1234567 APPL BUY 10000 10".split(" "))
+                .toList();
+        OrderRequest orderRequest = OrderRequest.of(orderInput);
+        Order order = Order.create(orderRequest);
+
         orderRepository.add(order);
 
         orderService.startOrder("CANCEL 1");
@@ -113,13 +115,10 @@ public class OrderServiceTest {
     @DisplayName("PENDING이 아닌 주문을 취소할 시에 예외 처리")
     void orderCancelFailTest() {
         // given
-        Order order = Order.create(
-                "3333-11-1234567",
-                new Symbol("APPL"),
-                "BUY",
-                10_000,
-                10
-        );
+        List<String> orderInput = Arrays.stream("ORDER 3333-11-1234567 APPL BUY 1000 10".split(" "))
+                .toList();
+        OrderRequest orderRequest = OrderRequest.of(orderInput);
+        Order order = Order.create(orderRequest);
         orderRepository.add(order);
         order.cancel();
 

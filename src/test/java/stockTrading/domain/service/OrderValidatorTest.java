@@ -153,13 +153,13 @@ public class OrderValidatorTest {
 
     // 가격 X 수량이 10,000,000 초과 시 예외 처리
     @Test
-    @DisplayName("가격 X 수량이 3,000,000 초과 시 예외 처리")
+    @DisplayName("가격 X 수량이 10,000,000 초과 시 예외 처리")
     void totalPriceRangeTest() {
         OrderRequest orderRequest = new OrderRequest(
                 "3333-11-1234567",
-                "TSLA",
+                "APPL",
                 "BUY",
-                1_000,
+                10_000,
                 3_500);
 
         Account account = accountRepository.fingById(orderRequest.accountId())
@@ -176,7 +176,7 @@ public class OrderValidatorTest {
     void accountFundUnderAtButOrderTest() {
         OrderRequest orderRequest = new OrderRequest(
                 "3333-11-1234567",
-                "TSLA",
+                "APPL",
                 "BUY",
                 1_000,
                 5_000);
