@@ -45,7 +45,6 @@ public class OrderService {
         if (orderInput.startsWith("CANCEL")) {
             String orderId = orderInput.split(" ")[1];
 
-            // 해당 종목 OrderBook 에서 제거
             matchingService.cancelOrder(Long.parseLong(orderId));
             return;
         }

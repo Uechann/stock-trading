@@ -7,6 +7,7 @@ import stockTrading.global.util.InputValidator;
 import stockTrading.view.InputView;
 import stockTrading.view.OutputView;
 
+import static stockTrading.global.util.Retry.retry;
 import static stockTrading.global.util.Retry.retryUntilValid;
 
 public class StockTradingController {
@@ -35,7 +36,10 @@ public class StockTradingController {
             if (orderInput.equals("END")) {
                 break;
             }
-            orderService.startOrder(orderInput);
+            retry(() -> {
+                orderService.startOrder(orderInput);
+                return true;
+            });
         }
     }
 
@@ -45,21 +49,38 @@ public class StockTradingController {
     }
 
     private void initialSymbols() {
-        String symbolInput = retryUntilValid(inputView::inputSymbols, InputValidator::validateSymbol);
-        initialService.createSymbols(symbolInput);
+        retry(() -> {
+            String symbolInput = inputView.inputSymbols();
+            InputValidator.validateSymbol(symbolInput);
+            initialService.createSymbols(symbolInput);
+            return true;
+        });
     }
 
     private void initialAccount() {
         while (true) {
-            String accountId = retryUntilValid(inputView::inputAccounts, InputValidator::validateGlobalEmptyOrBlank);
+            String accountId = retry(() -> {
+                String inputAccounts = inputView.inputAccounts();
+                InputValidator.validateGlobalEmptyOrBlank(inputAccounts);
+                return inputAccounts;
+            });
+
             if (accountId.equals("NEXT")) {
                 break;
             }
-            String accountFunds = retryUntilValid(inputView::inputAccountFunds, InputValidator::validateFunds);
-            Account account = initialService.createAccountWithFunds(accountId, accountFunds);
 
-            String accountSymbols = retryUntilValid(inputView::inputAccountSymbolQuantity, InputValidator::validateSymbolQuantity);
-            initialService.initializeSymbolQuantity(account, accountSymbols);
+            Account account = retry(() -> {
+                String inputFunds = inputView.inputAccountFunds();
+                InputValidator.validateFunds(inputFunds);
+                return initialService.createAccountWithFunds(accountId, inputFunds);
+            });
+
+            retry(() -> {
+                String accountSymbols = inputView.inputAccountSymbolQuantity();
+                InputValidator.validateSymbolQuantity(accountSymbols);
+                initialService.initializeSymbolQuantity(account, accountSymbols);
+                return true;
+            });
         }
     }
 }
