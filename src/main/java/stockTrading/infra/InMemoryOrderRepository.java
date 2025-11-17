@@ -5,6 +5,7 @@ import stockTrading.domain.model.Orders;
 import stockTrading.domain.repository.OrderRepository;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -25,6 +26,11 @@ public class InMemoryOrderRepository implements OrderRepository {
     @Override
     public Optional<Order> findById(long id) {
         return Optional.ofNullable(orders.findById(id));
+    }
+
+    @Override
+    public List<Order> findAll() {
+        return orders.findAll();
     }
 
     // =============== private method ==================

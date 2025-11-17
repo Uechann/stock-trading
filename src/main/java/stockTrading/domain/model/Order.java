@@ -49,6 +49,18 @@ public class Order {
         return this.status == OrderStatus.COMPLETED;
     }
 
+    public boolean isPartialCompleted() {
+        return this.status == OrderStatus.PARTIALLY_COMPLETED;
+    }
+
+    public boolean isPending() {
+        return this.status == OrderStatus.PENDING;
+    }
+
+    public boolean isCancelled() {
+        return this.status == OrderStatus.CANCELLED;
+    }
+
     public void cancel() {
         this.status = OrderStatus.CANCELLED;
     }

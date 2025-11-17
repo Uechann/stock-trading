@@ -1,6 +1,8 @@
 package stockTrading.domain.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Orders {
@@ -17,5 +19,9 @@ public class Orders {
 
     public Order findById(long id) {
         return orders.get(id);
+    }
+
+    public List<Order> findAll() {
+        return new ArrayList<>(orders.values());
     }
 }

@@ -8,4 +8,7 @@ public record OrderSummary(
         int pendingCount,
         int cancelCount
 ) {
+    public static OrderSummary create(int orderCount, int completeCount, int partialTradeCount, int pendingCount, int cancelCount) {
+        return new OrderSummary(orderCount, completeCount, partialTradeCount, pendingCount, cancelCount);
+    }
 }

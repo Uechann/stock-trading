@@ -77,6 +77,27 @@ public class SummaryService {
     }
 
     public OrderSummary summarizeOrders() {
+        List<Order> orders = orderRepository.findAll();
 
+        // 총 주문 수, 체결 수, 부분 체결 수, 대기 수, 취소 수
+        int totalCount = orders.size();
+
+        int completeCount = (int)orders.stream()
+                .filter(Order::isCompleted)
+                .count();
+
+        int partialCount = (int)orders.stream()
+                .filter(Order::isPartialCompleted)
+                .count();
+
+        int pendingCount = (int)orders.stream()
+                .filter(Order::isPending)
+                .count();
+
+        int cancelCount = (int)orders.stream()
+                .filter(Order::isCancelled)
+                .count();
+
+        return OrderSummary.create(totalCount, completeCount, partialCount, pendingCount, cancelCount);
     }
 }
