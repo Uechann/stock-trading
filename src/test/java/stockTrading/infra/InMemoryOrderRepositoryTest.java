@@ -23,7 +23,7 @@ public class InMemoryOrderRepositoryTest {
 
         List<String> orderInput = Arrays.stream("ORDER 3333-11-1234567 APPL BUY 1000 10".split(" "))
                 .toList();
-        OrderRequest orderRequest = OrderRequest.of(orderInput);
+        OrderRequest orderRequest = OrderRequest.create(orderInput);
         Order order1 = Order.create(orderRequest);
         Order order2 = Order.create(orderRequest);
 

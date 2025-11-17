@@ -219,10 +219,10 @@ public class SummaryServiceTest {
         String orderInput2 = "ORDER 3333-11-1234567 APPL BUY 1500 10";
         String orderInput3 = "ORDER 3333-22-1234567 APPL SELL 1400 10";
         String orderInput4 = "ORDER 3333-33-1234567 APPL SELL 1300 10";
-        OrderRequest orderRequest1 = OrderRequest.of(Arrays.stream(orderInput1.split(" ")).toList());
-        OrderRequest orderRequest2 = OrderRequest.of(Arrays.stream(orderInput2.split(" ")).toList());
-        OrderRequest orderRequest3 = OrderRequest.of(Arrays.stream(orderInput3.split(" ")).toList());
-        OrderRequest orderRequest4 = OrderRequest.of(Arrays.stream(orderInput4.split(" ")).toList());
+        OrderRequest orderRequest1 = OrderRequest.create(Arrays.stream(orderInput1.split(" ")).toList());
+        OrderRequest orderRequest2 = OrderRequest.create(Arrays.stream(orderInput2.split(" ")).toList());
+        OrderRequest orderRequest3 = OrderRequest.create(Arrays.stream(orderInput3.split(" ")).toList());
+        OrderRequest orderRequest4 = OrderRequest.create(Arrays.stream(orderInput4.split(" ")).toList());
         Order order1 = Order.create(orderRequest1);
         Order order2 = Order.create(orderRequest2);
         Order order3 = Order.create(orderRequest3);

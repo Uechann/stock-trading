@@ -24,8 +24,8 @@ public class OrderBookTest {
         List<String> orderInput2 = Arrays.stream("ORDER 3333-22-1234567 APPL SELL 1000 10".split(" "))
                 .toList();
 
-        OrderRequest orderRequest1 = OrderRequest.of(orderInput1);
-        OrderRequest orderRequest2 = OrderRequest.of(orderInput2);
+        OrderRequest orderRequest1 = OrderRequest.create(orderInput1);
+        OrderRequest orderRequest2 = OrderRequest.create(orderInput2);
 
         Order order1 = Order.create(orderRequest1);
         Order order2 = Order.create(orderRequest2);
