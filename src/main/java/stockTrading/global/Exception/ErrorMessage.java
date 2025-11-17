@@ -32,13 +32,21 @@ public enum ErrorMessage {
     ORDER_TOTAL_PRICE_IS_OVER("[ERROR] 주문 총 가격이 한도(10,000,000)를 초과하였습니다."),
     ORDER_ACCOUNT_FUNDS_IS_LEAK("[ERROR] 계좌 잔고가 부족합니다."),
     ORDER_ACCOUNT_SYMBOL_QUANTITY_IS_LEAK("[ERROR] 계좌 종목 보유량이 부족합니다."),
+    ORDER_NOT_FOUND("[ERROR] 해당 주문을 찾을 수 없습니다."),
+    ORDER_CAN_NOT_CANCEL("[ERROR] 해당 주문을 취소할 수 없습니다."),
+
 
     // 매칭
     ORDER_BOOK_SYMBOL_NOT_FOUND("[ERROR] 해당 종목이 없습니다."),
 
     // 정산
     ACCOUNT_FUNDS_IS_NOT_ENOUGH("[ERROR] 정산 중 계좌 잔고가 부족합니다."),
-    ACCOUNT_SYMBOL_QUANTITY_IS_NOT_ENOUGH("[ERROR] 정산 중 계좌 종목 보유량이 부족합니다.");
+    ACCOUNT_SYMBOL_QUANTITY_IS_NOT_ENOUGH("[ERROR] 정산 중 계좌 종목 보유량이 부족합니다."),
+
+
+    // 내부 에러
+    ID_SET_FAIL("[ERROR] ID 값 설정에 실패했습니다."),
+    ID_ALREADY_SET("[ERROR] ID 값이 이미 설정되어 있습니다.");
 
     private String message;
 

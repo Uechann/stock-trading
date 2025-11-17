@@ -61,7 +61,7 @@ public class OrderServiceTest {
                 symbolRegistry,
                 orderRepository,
                 orderValidator,
-                new MatchingService(orderBookRepository),
+                new MatchingService(orderRepository, orderBookRepository),
                 new SettlementService(accountRepository),
                 new OrderParser()
         );
@@ -98,43 +98,34 @@ public class OrderServiceTest {
                 10
         );
         orderRepository.add(order);
-        // order 상태 CANCELED
+
         orderService.startOrder("CANCEL 1");
-        // OrderBook에서 Order 제거
         OrderBook orderBook = orderBookRepository.findBySymbol(new Symbol("APPL")).get();
-        orderBook.removeOrder(order.getOrderId());
 
         assertThat(order.getStatus()).isEqualTo(OrderStatus.CANCELLED);
         assertThatThrownBy(() ->
-            orderBook.findOrderById(order.getOrderId())
+                orderBook.findOrderById(order.getOrderId())
         ).isInstanceOf(IllegalArgumentException.class);
-
     }
 
     // 완료된 주문 취소 할때 예외 처리
     @Test
-    @DisplayName("COMPLETE 된 주문을 취소할 시에 예외 처리")
+    @DisplayName("PENDING이 아닌 주문을 취소할 시에 예외 처리")
     void orderCancelFailTest() {
         // given
-        Order order1 = Order.create(
+        Order order = Order.create(
                 "3333-11-1234567",
                 new Symbol("APPL"),
                 "BUY",
                 10_000,
                 10
         );
-        Order order2 = Order.create(
-                "3333-22-1234567",
-                new Symbol("APPL"),
-                "SELL",
-                10_000,
-                10
-        );
-        orderRepository.add(order1);
-        orderRepository.add(order2);
+        orderRepository.add(order);
+        order.cancel();
 
         assertThatThrownBy(() ->
-            orderService.startOrder("CANCEL 1")
-        ).isInstanceOf(IllegalArgumentException.class);
+                orderService.startOrder("CANCEL 1"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 해당 주문을 취소할 수 없습니다.");
     }
 }

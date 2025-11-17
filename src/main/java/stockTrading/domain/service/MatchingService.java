@@ -2,20 +2,25 @@ package stockTrading.domain.service;
 
 import stockTrading.domain.model.Order;
 import stockTrading.domain.model.OrderBook;
+import stockTrading.domain.model.OrderStatus;
 import stockTrading.domain.model.Trade;
 import stockTrading.domain.repository.OrderBookRepository;
+import stockTrading.domain.repository.OrderRepository;
 
 import java.util.List;
+import java.util.Optional;
 
-import static stockTrading.global.Exception.ErrorMessage.ORDER_BOOK_SYMBOL_NOT_FOUND;
+import static stockTrading.global.Exception.ErrorMessage.*;
 
 public class MatchingService {
 
     // OrderBook 레포
     // Trading 레포 의존성
+    private final OrderRepository orderRepository;
     private final OrderBookRepository orderBookRepository;
 
-    public MatchingService(OrderBookRepository orderBookRepository) {
+    public MatchingService(OrderRepository orderRepository, OrderBookRepository orderBookRepository) {
+        this.orderRepository = orderRepository;
         this.orderBookRepository = orderBookRepository;
     }
 
@@ -28,10 +33,38 @@ public class MatchingService {
         return orderBook.match();
     }
 
+    public void cancelOrder(Long orderId) {
+        Order order = findOrderById(orderId);
+
+        // 취소할 수 없는 상황이면 예외 처리
+        validateOrderStatus(order);
+        order.cancel();
+
+        // OrderBook에서 제거
+        OrderBook orderBook = findOrderBook(order);
+        orderBook.removeOrder(orderId);
+    }
+
+    private static void validateOrderStatus(Order order) {
+        if (!order.getStatus().equals(OrderStatus.PENDING)) {
+            throw new IllegalArgumentException(ORDER_CAN_NOT_CANCEL.getMessage());
+        }
+    }
+
+    private OrderBook findOrderBook(Order order) {
+        return orderBookRepository.findBySymbol(order.getSymbol())
+                .orElseThrow(() -> new IllegalArgumentException(ORDER_BOOK_SYMBOL_NOT_FOUND.getMessage()));
+    }
+
     // ============= private method ====================
 
     private OrderBook findOrderBookBySymbol(Order order) {
         return orderBookRepository.findBySymbol(order.getSymbol())
                 .orElseThrow(() -> new IllegalArgumentException(ORDER_BOOK_SYMBOL_NOT_FOUND.getMessage()));
+    }
+
+    private Order findOrderById(Long orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND.getMessage()));
     }
 }

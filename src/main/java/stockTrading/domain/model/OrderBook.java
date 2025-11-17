@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.stream.Stream;
+
+import static stockTrading.global.Exception.ErrorMessage.ORDER_NOT_FOUND;
 
 public class OrderBook {
     private final Symbol symbol;
@@ -68,6 +71,21 @@ public class OrderBook {
             }
         }
         return trades;
+    }
+
+    public void removeOrder(Long orderId) {
+        buyOrders.removeIf(order -> order.getOrderId().equals(orderId));
+        sellOrders.removeIf(order -> order.getOrderId().equals(orderId));
+    }
+
+    public Order findOrderById(Long orderId) {
+        // 매수 큐 매도 큐에서 순회하여 조회
+        // 있으면 Order 반환 없으면 예외 처리
+        // Stream.concat으로 두개의 큐 stream을 연결해서 순회 후 없으면 예외 처리 -> 반환
+        return Stream.concat(buyOrders.stream(), sellOrders.stream())
+                .filter(order -> order.getOrderId().equals(orderId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ORDER_NOT_FOUND.getMessage()));
     }
 
     public Symbol getSymbol() {

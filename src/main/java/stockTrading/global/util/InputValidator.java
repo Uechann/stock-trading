@@ -38,7 +38,7 @@ public class InputValidator {
     // ============== private method =================
 
     private static void validateOrderPattern(String orderInput) {
-        if (!orderInput.matches(ORDER_REGEX)) {
+        if (!orderInput.matches(ORDER_REGEX) && !orderInput.matches(CANCEL_REGEX)) {
             throw new IllegalArgumentException(ORDER_PATTERN_NOT_MATCH.getMessage());
         }
     }

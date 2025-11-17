@@ -12,8 +12,7 @@ import stockTrading.global.util.Parser;
 
 import java.util.List;
 
-import static stockTrading.global.Exception.ErrorMessage.ACCOUNT_NOT_FOUND;
-import static stockTrading.global.Exception.ErrorMessage.SYMBOL_NOT_FOUND;
+import static stockTrading.global.Exception.ErrorMessage.*;
 
 public class OrderService {
 
@@ -42,6 +41,15 @@ public class OrderService {
     }
 
     public void startOrder(String orderInput) {
+        // 주문 취소 기능
+        if (orderInput.startsWith("CANCEL")) {
+            String orderId = orderInput.split(" ")[1];
+
+            // 해당 종목 OrderBook 에서 제거
+            matchingService.cancelOrder(Long.parseLong(orderId));
+            return;
+        }
+
         OrderRequest orderRequest = OrderRequest.of(parser.parse(orderInput));
 
         Account account = findByAccountId(orderRequest);

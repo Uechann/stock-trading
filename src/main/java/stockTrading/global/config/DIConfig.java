@@ -67,7 +67,10 @@ public final class DIConfig {
     }
 
     public MatchingService matchingService() {
-        return new MatchingService(orderBookRepository());
+        return new MatchingService(
+                orderRepository(),
+                orderBookRepository()
+        );
     }
 
     public SettlementService settlementService() {

@@ -2,11 +2,10 @@ package stockTrading.domain.model;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class Orders {
 
-    private Map<UUID, Order> orders;
+    private Map<Long, Order> orders;
 
     public Orders() {
         orders = new HashMap<>();
@@ -14,5 +13,9 @@ public class Orders {
 
     public void add(Order order) {
         orders.put(order.getOrderId(), order);
+    }
+
+    public Order findById(long id) {
+        return orders.get(id);
     }
 }

@@ -17,4 +17,6 @@ public class Pattern {
     public static final String ORDER_REGEX = String.format(
             "^ORDER\\s+%s\\s+%s\\s+%s\\s+%s\\s+%s$",
             ACCOUNT_ID_REGEX, SYMBOL_NAME_REGEX, BUY_OR_SELL, NUMBER, NUMBER);
+    public static final String CANCEL_REGEX = String.format(
+            "^CANCEL\\s+%s$", NUMBER);
 }

@@ -1,12 +1,10 @@
 package stockTrading.domain.model;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class Order {
 
-    private final Long orderId;
+    private Long orderId;
     private final String accountId;
     private final Symbol symbol;
     private final String side;
@@ -16,8 +14,7 @@ public class Order {
     private OrderStatus status;
     private final LocalDateTime orderDate;
 
-    private Order(Long orderId, String accountId, Symbol symbol, String side, int price, int quantity, LocalDateTime orderDate) {
-        this.orderId = orderId;
+    private Order(String accountId, Symbol symbol, String side, int price, int quantity, LocalDateTime orderDate) {
         this.accountId = accountId;
         this.symbol = symbol;
         this.side = side;
@@ -29,9 +26,8 @@ public class Order {
     }
 
     public static Order create(String accountId, Symbol symbol, String side, int price, int quantity) {
-        Long orderId = 
         LocalDateTime orderDate = LocalDateTime.now();
-        return new Order(orderId, accountId, symbol, side, price, quantity, orderDate);
+        return new Order(accountId, symbol, side, price, quantity, orderDate);
     }
 
     public void decrementRemainingQuantity(int quantity) {
@@ -43,6 +39,10 @@ public class Order {
 
     public boolean isCompleted() {
         return this.status == OrderStatus.COMPLETED;
+    }
+
+    public void cancel() {
+        this.status = OrderStatus.CANCELLED;
     }
 
     public int getRemainingQuantity() {
@@ -57,7 +57,7 @@ public class Order {
         return orderDate;
     }
 
-    public UUID getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 

@@ -14,9 +14,13 @@ public class Symbols {
 
     public Symbols() {}
 
-    public Symbols(List<Symbol> symbols) {
-        validate(symbols);
+    private Symbols(List<Symbol> symbols) {
         values.addAll(symbols);
+    }
+
+    public static Symbols create(List<Symbol> symbols) {
+        validate(symbols);
+        return new Symbols(symbols);
     }
 
     public boolean contains(Symbol symbol) {
