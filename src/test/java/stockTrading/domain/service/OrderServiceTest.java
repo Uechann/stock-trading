@@ -4,15 +4,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import stockTrading.domain.model.*;
-import stockTrading.domain.repository.AccountRepository;
-import stockTrading.domain.repository.OrderBookRepository;
-import stockTrading.domain.repository.OrderRepository;
-import stockTrading.domain.repository.SymbolRegistry;
+import stockTrading.domain.repository.*;
 import stockTrading.dto.OrderRequest;
 import stockTrading.global.util.OrderParser;
 import stockTrading.infra.InMemoryAccountRepository;
 import stockTrading.infra.InMemoryOrderBookRepository;
 import stockTrading.infra.InMemoryOrderRepository;
+import stockTrading.infra.InMemoryTradeRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,19 +25,21 @@ public class OrderServiceTest {
     private AccountRepository accountRepository;
     private OrderRepository orderRepository;
     private OrderBookRepository orderBookRepository;
+    private TradeRepository tradeRepository;
 
     @BeforeEach
     void setUp() {
         // given
         accountRepository = new InMemoryAccountRepository();
+        orderRepository = new InMemoryOrderRepository();
         Symbols symbols = new Symbols();
         symbols.add(new Symbol("APPL"));
         symbols.add(new Symbol("GOOG"));
         symbolRegistry = new SymbolRegistry(symbols);
-        orderRepository = new InMemoryOrderRepository();
         orderBookRepository = new InMemoryOrderBookRepository();
         orderBookRepository.add(OrderBook.create(new Symbol("APPL")));
         orderBookRepository.add(OrderBook.create(new Symbol("GOOG")));
+        tradeRepository = new InMemoryTradeRepository();
 
         // 계좌 초기화
         Account accountA = Account.create("3333-11-1234567", 4_000_000);
@@ -65,7 +65,7 @@ public class OrderServiceTest {
                 symbolRegistry,
                 orderRepository,
                 orderValidator,
-                new TradeService(orderRepository, orderBookRepository),
+                new TradeService(orderRepository, orderBookRepository, tradeRepository),
                 new SettlementService(accountRepository),
                 new OrderParser()
         );

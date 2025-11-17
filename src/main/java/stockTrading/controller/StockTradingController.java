@@ -26,29 +26,29 @@ public class StockTradingController {
     public void run() {
         initialize();
         inputAndStartOrder();
+
+        // 체결 결과 출력 기능
+
+
     }
 
 // ===================== private method ========================
 
     private void inputAndStartOrder() {
         while (true) {
-            String orderInput = retry(() -> {
+            String input = retry(() -> {
                 String inputOrder = inputView.inputOrder();
                 if (inputOrder.equals("END")) {
                     return "END";
                 }
                 InputValidator.validateOrder(inputOrder);
-                return inputOrder;
+                orderService.startOrder(inputOrder);
+                return null;
             });
 
-            if (orderInput.equals("END")) {
+            if (input.equals("END")) {
                 break;
             }
-
-            retry(() -> {
-                orderService.startOrder(orderInput);
-                return true;
-            });
         }
     }
 

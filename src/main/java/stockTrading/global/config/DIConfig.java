@@ -2,10 +2,7 @@ package stockTrading.global.config;
 
 import stockTrading.controller.StockTradingController;
 import stockTrading.domain.model.Symbols;
-import stockTrading.domain.repository.AccountRepository;
-import stockTrading.domain.repository.OrderBookRepository;
-import stockTrading.domain.repository.OrderRepository;
-import stockTrading.domain.repository.SymbolRegistry;
+import stockTrading.domain.repository.*;
 import stockTrading.domain.service.*;
 import stockTrading.global.util.OrderParser;
 import stockTrading.global.util.Parser;
@@ -14,6 +11,7 @@ import stockTrading.global.util.SymbolQuantityParser;
 import stockTrading.infra.InMemoryAccountRepository;
 import stockTrading.infra.InMemoryOrderBookRepository;
 import stockTrading.infra.InMemoryOrderRepository;
+import stockTrading.infra.InMemoryTradeRepository;
 import stockTrading.view.InputView;
 import stockTrading.view.OutputView;
 
@@ -22,6 +20,7 @@ public final class DIConfig {
     private final AccountRepository accountRepository = new InMemoryAccountRepository();
     private final OrderRepository orderRepository = new InMemoryOrderRepository();
     private final OrderBookRepository orderBookRepository = new InMemoryOrderBookRepository();
+    private final TradeRepository tradeRepository = new InMemoryTradeRepository();
     private final Symbols symbols = new Symbols();
     private final SymbolRegistry symbolRegistry = new SymbolRegistry(symbols);
 
@@ -53,6 +52,10 @@ public final class DIConfig {
         return orderBookRepository;
     }
 
+    public TradeRepository tradeRepository() {
+        return tradeRepository;
+    }
+
     public OrderValidator orderValidator() {
         return new OrderValidator();
     }
@@ -69,7 +72,8 @@ public final class DIConfig {
     public TradeService matchingService() {
         return new TradeService(
                 orderRepository(),
-                orderBookRepository()
+                orderBookRepository(),
+                tradeRepository()
         );
     }
 

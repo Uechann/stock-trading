@@ -7,9 +7,11 @@ import stockTrading.domain.model.*;
 import stockTrading.domain.repository.AccountRepository;
 import stockTrading.domain.repository.OrderRepository;
 import stockTrading.domain.repository.SymbolRegistry;
+import stockTrading.domain.repository.TradeRepository;
 import stockTrading.dto.*;
 import stockTrading.infra.InMemoryAccountRepository;
 import stockTrading.infra.InMemoryOrderRepository;
+import stockTrading.infra.InMemoryTradeRepository;
 
 import java.util.Arrays;
 import java.util.List;

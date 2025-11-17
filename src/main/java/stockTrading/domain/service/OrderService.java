@@ -48,7 +48,7 @@ public class OrderService {
             return;
         }
 
-        OrderRequest orderRequest = OrderRequest.of(parser.parse(orderInput));
+        OrderRequest orderRequest = OrderRequest.create(parser.parse(orderInput));
         Account account = findByAccountId(orderRequest);
         Symbol symbol = new Symbol(orderRequest.symbol());
         validateSymbol(symbol);

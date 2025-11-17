@@ -6,6 +6,7 @@ import stockTrading.domain.model.OrderStatus;
 import stockTrading.domain.model.Trade;
 import stockTrading.domain.repository.OrderBookRepository;
 import stockTrading.domain.repository.OrderRepository;
+import stockTrading.domain.repository.TradeRepository;
 
 import java.util.List;
 
@@ -17,10 +18,12 @@ public class TradeService {
     // Trading 레포 의존성
     private final OrderRepository orderRepository;
     private final OrderBookRepository orderBookRepository;
+    private final TradeRepository tradeRepository;
 
-    public TradeService(OrderRepository orderRepository, OrderBookRepository orderBookRepository) {
+    public TradeService(OrderRepository orderRepository, OrderBookRepository orderBookRepository, TradeRepository tradeRepository) {
         this.orderRepository = orderRepository;
         this.orderBookRepository = orderBookRepository;
+        this.tradeRepository = tradeRepository;
     }
 
     public List<Trade> match(Order order) {
@@ -28,7 +31,9 @@ public class TradeService {
         OrderBook orderBook = findOrderBookBySymbol(order);
 
         orderBook.add(order);
-        return orderBook.match();
+        List<Trade> matchResult = orderBook.match();
+        matchResult.forEach(tradeRepository::add);
+        return matchResult;
     }
 
     public void cancelOrder(Long orderId) {
