@@ -104,10 +104,10 @@ public class SummaryService {
                     .orElse(0);
 
             double averagePrice = trades.stream()
-                    .mapToInt(Trade::getPrice)
+                    .mapToDouble(Trade::getPrice)
                     .average()
                     .orElse(0);
-
+            averagePrice = BigDecimal.valueOf(averagePrice).setScale(2, RoundingMode.HALF_UP).doubleValue();
             symbolSummaries.add(SymbolSummary.create(symbol.name(), count, averagePrice, lastPrice));
         });
 

@@ -30,13 +30,15 @@ public class StockTradingController {
     public void run() {
         initialize();
         inputAndStartOrder();
-
-        // 체결 결과 출력 기능
-        Summary summary = summaryService.summarize();
-        outputView.printSummary(summary);
+        outputSummary();
     }
 
 // ===================== private method ========================
+
+    private void outputSummary() {
+        Summary summary = summaryService.summarize();
+        outputView.printSummary(summary);
+    }
 
     private void inputAndStartOrder() {
         while (true) {
@@ -47,7 +49,7 @@ public class StockTradingController {
                 }
                 InputValidator.validateOrder(inputOrder);
                 orderService.startOrder(inputOrder);
-                return null;
+                return "ORDER";
             });
 
             if (input.equals("END")) {

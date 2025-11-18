@@ -19,4 +19,12 @@ public record TradeSummary(
                 trade.getQuantity()
         );
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "[체결] %s %d X %d (BUY: %s, SELL: %s)",
+                symbol, price, quantity, buyerAccountId, sellerAccountId
+        );
+    }
 }

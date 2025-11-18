@@ -23,10 +23,12 @@ public class Positions {
     }
 
     public void applyBuy(Trade trade) {
+        // 없을 때 예외 처리
         values.get(trade.getSymbol()).applyBuy(trade);
     }
 
     public void applySell(Trade trade) {
+        // 없을 때 예외 처리
         values.get(trade.getSymbol()).applySell(trade);
     }
 
