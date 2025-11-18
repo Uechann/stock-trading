@@ -18,7 +18,8 @@ public enum ErrorMessage {
     ACCOUNT_FUNDS_NOT_IN_RANGE("[ERROR] 계좌 자금 숫자 범위에 맞지 않습니다."),
     ACCOUNT_SYMBOL_QUANTITY_NOT_MATCH("[ERROR] 계좌 종목 보유 수량에 대한 입력 형식이 맞지 않습니다."),
     ACCOUNT_SYMBOL_QUANTITY_NOT_IN_RANGE("[ERROR] 계좌 종 목 보유 수량 범위에 맞지 않습니다."),
-    ACCOUNT_NOT_FOUND("[ERROR] 계좌가 존재하지 않습니다."),
+    ACCOUNT_NOT_FOUND("[ERROR] 해당 계좌가 존재하지 않습니다."),
+    ACCOUNT_IS_EMPTY("[ERROR] 계좌가 비어있습니다."),
 
 
     // 주문

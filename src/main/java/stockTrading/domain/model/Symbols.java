@@ -42,7 +42,7 @@ public class Symbols {
 
     private static void validate(List<Symbol> symbols) {
         int count = (int) symbols.stream()
-                .map(Symbol::getName)
+                .map(Symbol::name)
                 .distinct()
                 .count();
 

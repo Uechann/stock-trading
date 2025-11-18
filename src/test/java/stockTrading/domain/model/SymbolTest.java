@@ -11,6 +11,6 @@ public class SymbolTest {
     @DisplayName("종목은 알파벳 대문자 1~5자리 형식이어야 한다.")
     void symbolNameTest() {
         Symbol symbol = new Symbol("AAPL");
-        assertThat(symbol.getName()).isEqualTo("AAPL");
+        assertThat(symbol.name()).isEqualTo("AAPL");
     }
 }

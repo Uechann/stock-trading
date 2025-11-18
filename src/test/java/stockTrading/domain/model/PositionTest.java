@@ -18,7 +18,7 @@ public class PositionTest {
     void AccountSymbolInputSuccessTest() {
 
         // when
-        Position position = Position.create(symbol, 5);
+        Position position = Position.create(symbol, 10000, 5);
 
         // then
         assertThat(position.getSymbol()).isEqualTo(symbol);
@@ -31,7 +31,7 @@ public class PositionTest {
     void AccountSymbolInputFailTest(int quantity) {
 
         assertThatThrownBy(() ->
-                Position.create(symbol, quantity)
+                Position.create(symbol, 10000, quantity)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

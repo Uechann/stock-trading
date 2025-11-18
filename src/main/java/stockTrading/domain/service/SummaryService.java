@@ -7,11 +7,10 @@ import stockTrading.domain.repository.SymbolRegistry;
 import stockTrading.domain.repository.TradeRepository;
 import stockTrading.dto.*;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static stockTrading.global.Exception.ErrorMessage.ACCOUNT_IS_EMPTY;
 
 public class SummaryService {
 
@@ -49,7 +48,42 @@ public class SummaryService {
     }
 
     public List<AccountSummary> summarizeAccounts() {
-        return null;
+        // 계좌 번호
+        List<Account> accounts = findAllAccounts();
+        List<AccountSummary> accountSummaries = new ArrayList<>();
+        for (Account account : accounts) {
+
+            // 계좌 번호, 가격
+            String accountId = account.getId();
+            int funds = account.getFunds();
+
+            // positions
+            List<PositionSummary> positionSummaries = new ArrayList<>();
+            List<Symbol> symbols = symbolRegistry.findAll();
+            for (Symbol symbol : symbols) {
+
+                // 종목
+                String symbolName = symbol.name();
+                // 수량
+                int quantity = account.getQuantity(symbol);
+                // 평균 매입가
+                int avgCost = account.getAvgCost(symbol);
+                // 최종 체결가 (현재가)
+                int lastPrice = symbolPriceProvider.getPrice(symbol);
+                // 평가 손익
+                // 평가 손익 : (마지막 채결가 - 평균 매입가) * 보유 수량
+                // (8000 - 9000) * 120 = -120,000원
+                int profitAndLoss = (lastPrice - avgCost) * quantity;
+                // 수익률
+                // 수익률 : 평가 손익 / (평균매입가 * 보유 수량) * 100
+                // -120,000 / (9000 * 120) * 100
+                // -120,000 / 10,80,000 = -11,11%
+                double profitRate = ((double) profitAndLoss / (double) (avgCost * quantity)) * 100;
+                positionSummaries.add(PositionSummary.create(symbolName, quantity, avgCost, lastPrice, profitAndLoss, profitRate));
+            }
+            accountSummaries.add(AccountSummary.create(accountId, funds, positionSummaries));
+        }
+        return accountSummaries;
     }
 
     public List<SymbolSummary> summarizeSymbols() {
@@ -62,7 +96,7 @@ public class SummaryService {
             Long count = (long) trades.size();
 
             // 최종 체결가
-            Long lastPrice = (long)trades.stream()
+            Long lastPrice = (long) trades.stream()
                     .max(Comparator.comparing(Trade::getPrice))
                     .map(Trade::getPrice)
                     .orElse(0);
@@ -72,7 +106,7 @@ public class SummaryService {
                     .average()
                     .orElse(0);
 
-            symbolSummaries.add(SymbolSummary.create(symbol.getName(), count, averagePrice, lastPrice));
+            symbolSummaries.add(SymbolSummary.create(symbol.name(), count, averagePrice, lastPrice));
         });
 
         return symbolSummaries;
@@ -84,22 +118,29 @@ public class SummaryService {
         // 총 주문 수, 체결 수, 부분 체결 수, 대기 수, 취소 수
         int totalCount = orders.size();
 
-        int completeCount = (int)orders.stream()
+        int completeCount = (int) orders.stream()
                 .filter(Order::isCompleted)
                 .count();
 
-        int partialCount = (int)orders.stream()
+        int partialCount = (int) orders.stream()
                 .filter(Order::isPartialCompleted)
                 .count();
 
-        int pendingCount = (int)orders.stream()
+        int pendingCount = (int) orders.stream()
                 .filter(Order::isPending)
                 .count();
 
-        int cancelCount = (int)orders.stream()
+        int cancelCount = (int) orders.stream()
                 .filter(Order::isCancelled)
                 .count();
 
         return OrderSummary.create(totalCount, completeCount, partialCount, pendingCount, cancelCount);
+    }
+
+    // ================= private method =========================
+
+    private List<Account> findAllAccounts() {
+        return accountRepository.findAll()
+                .orElseThrow(() -> new IllegalArgumentException(ACCOUNT_IS_EMPTY.getMessage()));
     }
 }

@@ -8,4 +8,7 @@ public record AccountSummary(
         int funds,
         List<PositionSummary> positions
 ) {
+    public static AccountSummary create(String accountId, int funds, List<PositionSummary> positions) {
+        return new AccountSummary(accountId, funds, positions);
+    }
 }

@@ -37,4 +37,8 @@ public class Positions {
 
         return values.get(symbol).getQuantity();
     }
+
+    public int getAvgCost(Symbol symbol) {
+        return values.get(symbol).getAvgCost();
+    }
 }

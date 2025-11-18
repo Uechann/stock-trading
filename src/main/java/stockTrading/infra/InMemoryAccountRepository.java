@@ -4,6 +4,7 @@ import stockTrading.domain.model.Account;
 import stockTrading.domain.model.Accounts;
 import stockTrading.domain.repository.AccountRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 import static stockTrading.global.Exception.ErrorMessage.ACCOUNT_DUPLICATED;
@@ -29,5 +30,10 @@ public class InMemoryAccountRepository implements AccountRepository {
         if (accounts.contains(account)) {
             throw new IllegalArgumentException(ACCOUNT_DUPLICATED.getMessage());
         }
+    }
+
+    @Override
+    public Optional<List<Account>> findAll() {
+        return Optional.ofNullable(accounts.findAll());
     }
 }

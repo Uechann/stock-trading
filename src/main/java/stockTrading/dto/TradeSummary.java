@@ -14,7 +14,7 @@ public record TradeSummary(
         return new TradeSummary(
                 trade.getBuyerAccountId(),
                 trade.getSellerAccountId(),
-                trade.getSymbol().getName(),
+                trade.getSymbol().name(),
                 trade.getPrice(),
                 trade.getQuantity()
         );

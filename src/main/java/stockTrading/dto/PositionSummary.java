@@ -9,4 +9,7 @@ public record PositionSummary(
         Long profit,
         double profitRate
 ) {
+    public static PositionSummary create(String symbol, int quantity, double averageCost, long lastCost, long profit, double profitRate) {
+        return new PositionSummary(symbol, quantity, averageCost, lastCost, profit, profitRate);
+    }
 }

@@ -1,5 +1,6 @@
 package stockTrading.domain.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,10 @@ public class Accounts {
     // 계좌번호로 조회
     public Account findById(String id) {
         return values.get(id);
+    }
+
+    public List<Account> findAll() {
+        return new ArrayList<>(values.values());
     }
 
     // ============== private method ===================

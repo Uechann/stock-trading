@@ -53,8 +53,8 @@ public class AccountTest {
         Symbol google = new Symbol("GOOG");
 
         // when
-        Position position1 = Position.create(apple, 50);
-        Position position2 = Position.create(google, 30);
+        Position position1 = Position.create(apple, 10000, 50);
+        Position position2 = Position.create(google, 10000, 30);
         Positions positions = new Positions();
         positions.add(position1);
         positions.add(position2);

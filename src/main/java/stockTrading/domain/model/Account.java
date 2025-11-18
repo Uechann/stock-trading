@@ -52,6 +52,10 @@ public class Account {
         }
     }
 
+    public int getAvgCost(Symbol symbol) {
+        return positions.getAvgCost(symbol);
+    }
+
     @Override
     public boolean equals(Object obj) {
         return id.equals((String) obj);

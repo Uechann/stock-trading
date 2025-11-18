@@ -30,20 +30,16 @@ public class Position {
         totalPrice = (int) ((double) totalPrice * (double) (quantity - trade.getQuantity()) / quantity);
     }
 
-    public void increaseQuantity(int quantity) {
-        this.quantity += quantity;
-    }
-
-    public void decreaseQuantity(int quantity) {
-        this.quantity -= quantity;
-    }
-
     public Symbol getSymbol() {
         return symbol;
     }
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public int getAvgCost() {
+        return totalPrice / quantity;
     }
 
     // =============== private metohd =====================

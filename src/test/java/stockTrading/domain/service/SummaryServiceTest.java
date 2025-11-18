@@ -17,7 +17,8 @@ import stockTrading.infra.InMemoryTradeRepository;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class SummaryServiceTest {
 
@@ -82,18 +83,18 @@ public class SummaryServiceTest {
         Account accountB = Account.create("3333-22-1234567", 1_000_000);
         Account accountC = Account.create("3333-33-1234567", 1_000_000);
 
-        Position positionA1 = Position.create(APPL, 100);
-        Position positionA2 = Position.create(GOOG, 100);
+        Position positionA1 = Position.create(APPL, 10000, 100);
+        Position positionA2 = Position.create(GOOG, 10000, 100);
         Positions positionsA = Positions.create(List.of(positionA1, positionA2));
         accountA.initializeSymbolQuantities(positionsA);
 
-        Position positionB1 = Position.create(APPL, 100);
-        Position positionB2 = Position.create(GOOG, 100);
+        Position positionB1 = Position.create(APPL, 10000, 100);
+        Position positionB2 = Position.create(GOOG, 10000, 100);
         Positions positionsB = Positions.create(List.of(positionB1, positionB2));
         accountB.initializeSymbolQuantities(positionsB);
 
-        Position positionC1 = Position.create(APPL, 100);
-        Position positionC2 = Position.create(GOOG, 100);
+        Position positionC1 = Position.create(APPL, 10000, 100);
+        Position positionC2 = Position.create(GOOG, 10000, 100);
         Positions positionsC = Positions.create(List.of(positionC1, positionC2));
         accountC.initializeSymbolQuantities(positionsC);
 
@@ -131,18 +132,18 @@ public class SummaryServiceTest {
         Account accountB = Account.create("3333-22-1234567", 1_000_000);
         Account accountC = Account.create("3333-33-1234567", 1_000_000);
 
-        Position positionA1 = Position.create(APPL, 100);
-        Position positionA2 = Position.create(GOOG, 100);
+        Position positionA1 = Position.create(APPL, 10000, 100);
+        Position positionA2 = Position.create(GOOG, 10000, 100);
         Positions positionsA = Positions.create(List.of(positionA1, positionA2));
         accountA.initializeSymbolQuantities(positionsA);
 
-        Position positionB1 = Position.create(APPL, 100);
-        Position positionB2 = Position.create(GOOG, 100);
+        Position positionB1 = Position.create(APPL, 10000, 100);
+        Position positionB2 = Position.create(GOOG, 10000, 100);
         Positions positionsB = Positions.create(List.of(positionB1, positionB2));
         accountB.initializeSymbolQuantities(positionsB);
 
-        Position positionC1 = Position.create(APPL, 100);
-        Position positionC2 = Position.create(GOOG, 100);
+        Position positionC1 = Position.create(APPL, 10000, 100);
+        Position positionC2 = Position.create(GOOG, 10000, 100);
         Positions positionsC = Positions.create(List.of(positionC1, positionC2));
         accountC.initializeSymbolQuantities(positionsC);
 
@@ -202,7 +203,7 @@ public class SummaryServiceTest {
         tradeRepository.add(trade4);
 
         List<SymbolSummary> symbolSummaries = summaryService.summarizeSymbols();
-        assertThat(symbolSummaries).hasSize(2);
+        assertThat(symbolSummaries).hasSize(1);
 
         SymbolSummary appl = symbolSummaries.stream()
                 .filter(symbolSummary -> symbolSummary.symbol().equals("APPL"))

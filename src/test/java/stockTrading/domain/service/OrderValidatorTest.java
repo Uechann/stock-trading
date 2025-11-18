@@ -25,15 +25,15 @@ public class OrderValidatorTest {
         accountRepository.add(accountB);
 
         Positions positionsA = new Positions();
-        Position positionA1 = Position.create(new Symbol("APPL"), 100);
-        Position positionA2 = Position.create(new Symbol("GOOG"), 100);
+        Position positionA1 = Position.create(new Symbol("APPL"), 10000, 100);
+        Position positionA2 = Position.create(new Symbol("GOOG"), 10000, 100);
         positionsA.add(positionA1);
         positionsA.add(positionA2);
         accountA.initializeSymbolQuantities(positionsA);
 
         Positions positionsB = new Positions();
-        Position position1B1 = Position.create(new Symbol("APPL"), 100);
-        Position position1B2 = Position.create(new Symbol("GOOG"), 100);
+        Position position1B1 = Position.create(new Symbol("APPL"), 10000, 100);
+        Position position1B2 = Position.create(new Symbol("GOOG"), 10000, 100);
         positionsB.add(position1B1);
         positionsB.add(position1B2);
         accountB.initializeSymbolQuantities(positionsB);
