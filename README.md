@@ -310,6 +310,12 @@ Controll, service, 등 의존성 DI 컨테이너 구현합니다.
     - OrderRepository에서 OrderStatus를 순회하면서 상태들 조회 저장
 
 ---
+### 예외 개선 사항
+1. 계좌 position에 종목이 있는지 검사하는 메서드 검사 해야함
+2. 부분 체결을 제대로 인식 못하고 있음
+
+
+---
 
 ## Level 2 비동기 주문 파이프라인
 
