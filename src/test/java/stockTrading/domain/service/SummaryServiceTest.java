@@ -28,6 +28,7 @@ public class SummaryServiceTest {
     private OrderRepository orderRepository;
     private TradeRepository tradeRepository;
     private SummaryService summaryService;
+    private SettlementService settlementService;
 
     private Symbol APPL;
     private Symbol GOOG;
@@ -42,6 +43,8 @@ public class SummaryServiceTest {
         APPL = new Symbol("APPL");
         GOOG = new Symbol("GOOG");
         symbolRegistry = new SymbolRegistry(Symbols.create(List.of(APPL, GOOG)));
+        symbolPriceProvider.save(APPL, 10000);
+        symbolPriceProvider.save(GOOG, 10000);
 
         summaryService = new SummaryService(
                 accountRepository,
@@ -49,6 +52,10 @@ public class SummaryServiceTest {
                 symbolPriceProvider,
                 orderRepository,
                 tradeRepository
+        );
+        settlementService = new SettlementService(
+                accountRepository,
+                symbolPriceProvider
         );
     }
 
@@ -151,10 +158,11 @@ public class SummaryServiceTest {
         accountRepository.add(accountB);
         accountRepository.add(accountC);
 
-        Trade trade1 = Trade.create("3333-11-1234567", "3333-22-1234567", APPL, 10000, 10);
-        Trade trade2 = Trade.create("3333-11-1234567", "3333-33-1234567", APPL, 8000, 10);
+        Trade trade1 = Trade.create("3333-11-1234567", "3333-22-1234567", APPL, 10_000, 10);
+        Trade trade2 = Trade.create("3333-11-1234567", "3333-33-1234567", APPL, 8_000, 10);
         tradeRepository.add(trade1);
         tradeRepository.add(trade2);
+        settlementService.settle(List.of(trade1, trade2));
 
         List<AccountSummary> summaries = summaryService.summarizeAccounts();
         assertThat(summaries).hasSize(3);
@@ -165,7 +173,7 @@ public class SummaryServiceTest {
                 .orElseThrow();
 
         assertThat(summary.accountId()).isEqualTo("3333-11-1234567");
-        assertThat(summary.funds()).isEqualTo(10000);
+        assertThat(summary.funds()).isEqualTo(820_000);
 
         List<PositionSummary> positions = summary.positions();
         PositionSummary appleSummary = positions.stream()
@@ -176,23 +184,47 @@ public class SummaryServiceTest {
         assertThat(appleSummary.symbol()).isEqualTo("APPL");
         assertThat(appleSummary.quantity()).isEqualTo(120);
         // 평균 매입가 기존 100개 매입가를 9000원이라고 가정하면
-        // 평균 매입가 : 총원가((9000 * 100) + (10000 * 10) + (8000 * 10)) / (보유 수량)120 = 9000원
-        assertThat(appleSummary.averageCost()).isEqualTo(9000); // 9000원
+        // 평균 매입가 : 총원가((10,000 * 100) + (10000 * 10) + (8000 * 10)) / (보유 수량)120 = 1,180,000/120 = 9833원
+        assertThat(appleSummary.averageCost()).isEqualTo(9833); // 9000원
         // 마지막 체결가 8000원
         assertThat(appleSummary.lastCost()).isEqualTo(8000);
         // 평가 손익 : (마지막 채결가 - 평균 매입가) * 보유 수량
-        // (8000 - 9000) * 120 = -120,000원
-        assertThat(appleSummary.profit()).isEqualTo(-120_000);
+        // (8000 - 9833) * 120 = -219,960원
+        assertThat(appleSummary.profit()).isEqualTo(-219_960);
         // 수익률 : 평가 손익 / (평균매입가 * 보유 수량) * 100
-        // -120,000 / (9000 * 120) * 100
-        // -120,000 / 10,80,000 = -11,11%
-        assertThat(appleSummary.profitRate()).isEqualTo(-11.11);
+        // -219,960 / (9833 * 120) * 100
+        // -219_960 / 1,179,960 = -18.64%
+        assertThat(appleSummary.profitRate()).isEqualTo(-18.64);
     }
 
     // 각 종목 별 통계 검증 (종목, 체결 건수, 평균 체결가, 최종 체결가)
     @Test
     @DisplayName("각 종목별 통계 검증 테스트 ")
     void symbolSummaryTest() {
+        // given
+        Account accountA = Account.create("3333-11-1234567", 1_000_000);
+        Account accountB = Account.create("3333-22-1234567", 1_000_000);
+        Account accountC = Account.create("3333-33-1234567", 1_000_000);
+
+        Position positionA1 = Position.create(APPL, 10000, 100);
+        Position positionA2 = Position.create(GOOG, 10000, 100);
+        Positions positionsA = Positions.create(List.of(positionA1, positionA2));
+        accountA.initializeSymbolQuantities(positionsA);
+
+        Position positionB1 = Position.create(APPL, 10000, 100);
+        Position positionB2 = Position.create(GOOG, 10000, 100);
+        Positions positionsB = Positions.create(List.of(positionB1, positionB2));
+        accountB.initializeSymbolQuantities(positionsB);
+
+        Position positionC1 = Position.create(APPL, 10000, 100);
+        Position positionC2 = Position.create(GOOG, 10000, 100);
+        Positions positionsC = Positions.create(List.of(positionC1, positionC2));
+        accountC.initializeSymbolQuantities(positionsC);
+
+        accountRepository.add(accountA);
+        accountRepository.add(accountB);
+        accountRepository.add(accountC);
+
         Trade trade1 = Trade.create("3333-11-1234567", "3333-22-1234567", APPL, 10000, 10);
         Trade trade2 = Trade.create("3333-11-1234567", "3333-33-1234567", APPL, 8000, 10);
         Trade trade3 = Trade.create("3333-11-1234567", "3333-33-1234567", APPL, 9000, 10);
@@ -201,6 +233,8 @@ public class SummaryServiceTest {
         tradeRepository.add(trade2);
         tradeRepository.add(trade3);
         tradeRepository.add(trade4);
+
+        settlementService.settle(List.of(trade1, trade2, trade3, trade4));
 
         List<SymbolSummary> symbolSummaries = summaryService.summarizeSymbols();
         assertThat(symbolSummaries).hasSize(1);

@@ -7,6 +7,8 @@ import stockTrading.domain.repository.SymbolRegistry;
 import stockTrading.domain.repository.TradeRepository;
 import stockTrading.dto.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,7 +63,6 @@ public class SummaryService {
             List<PositionSummary> positionSummaries = new ArrayList<>();
             List<Symbol> symbols = symbolRegistry.findAll();
             for (Symbol symbol : symbols) {
-
                 // 종목
                 String symbolName = symbol.name();
                 // 수량
@@ -79,6 +80,7 @@ public class SummaryService {
                 // -120,000 / (9000 * 120) * 100
                 // -120,000 / 10,80,000 = -11,11%
                 double profitRate = ((double) profitAndLoss / (double) (avgCost * quantity)) * 100;
+                profitRate = BigDecimal.valueOf(profitRate).setScale(2, RoundingMode.HALF_UP).doubleValue();
                 positionSummaries.add(PositionSummary.create(symbolName, quantity, avgCost, lastPrice, profitAndLoss, profitRate));
             }
             accountSummaries.add(AccountSummary.create(accountId, funds, positionSummaries));
@@ -97,7 +99,7 @@ public class SummaryService {
 
             // 최종 체결가
             Long lastPrice = (long) trades.stream()
-                    .max(Comparator.comparing(Trade::getPrice))
+                    .max(Comparator.comparing(Trade::getCreatedAt))
                     .map(Trade::getPrice)
                     .orElse(0);
 
