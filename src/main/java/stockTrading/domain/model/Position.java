@@ -7,13 +7,15 @@ public class Position {
     private int quantity;
     private int totalPrice; // 총 매입 원가 금액 (매입가 * 수량)의 합산
 
-    private Position(Symbol symbol, int quantity) {
+    private Position(Symbol symbol, int quantity, int totalPrice) {
         this.symbol = symbol;
         this.quantity = quantity;
+        this.totalPrice = totalPrice;
     }
 
-    public Symbol getSymbol() {
-        return symbol;
+    public static Position create(Symbol symbol, int price, int quantity) {
+        validateAccountSymbolQuantity(quantity);
+        return new Position(symbol, quantity, price * quantity);
     }
 
     public int getQuantity() {

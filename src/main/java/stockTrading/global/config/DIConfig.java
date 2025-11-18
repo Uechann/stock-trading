@@ -1,6 +1,7 @@
 package stockTrading.global.config;
 
 import stockTrading.controller.StockTradingController;
+import stockTrading.domain.model.SymbolPriceProvider;
 import stockTrading.domain.model.Symbols;
 import stockTrading.domain.repository.*;
 import stockTrading.domain.service.*;
@@ -8,10 +9,7 @@ import stockTrading.global.util.OrderParser;
 import stockTrading.global.util.Parser;
 import stockTrading.global.util.SymbolParser;
 import stockTrading.global.util.SymbolQuantityParser;
-import stockTrading.infra.InMemoryAccountRepository;
-import stockTrading.infra.InMemoryOrderBookRepository;
-import stockTrading.infra.InMemoryOrderRepository;
-import stockTrading.infra.InMemoryTradeRepository;
+import stockTrading.infra.*;
 import stockTrading.view.InputView;
 import stockTrading.view.OutputView;
 
@@ -23,6 +21,7 @@ public final class DIConfig {
     private final TradeRepository tradeRepository = new InMemoryTradeRepository();
     private final Symbols symbols = new Symbols();
     private final SymbolRegistry symbolRegistry = new SymbolRegistry(symbols);
+    private final SymbolPriceProvider symbolPriceProvider = new InMemorySymbolPrice();
 
     public Parser<String> symbolParser() {
         return new SymbolParser();
@@ -60,13 +59,19 @@ public final class DIConfig {
         return new OrderValidator();
     }
 
+    public SymbolPriceProvider symbolPriceProvider() {
+        return symbolPriceProvider;
+    }
+
     public InitialService initialService() {
         return new InitialService(
                 symbolRegistry(),
+                symbolPriceProvider(),
                 accountRepository(),
                 orderBookRepository(),
                 symbolParser(),
-                symbolQuantityParser());
+                symbolQuantityParser()
+        );
     }
 
     public TradeService matchingService() {
@@ -78,7 +83,10 @@ public final class DIConfig {
     }
 
     public SettlementService settlementService() {
-        return new SettlementService(accountRepository());
+        return new SettlementService(
+                accountRepository(),
+                symbolPriceProvider()
+        );
     }
 
     public OrderService orderService() {
@@ -97,6 +105,7 @@ public final class DIConfig {
         return new SummaryService(
                 accountRepository(),
                 symbolRegistry(),
+                symbolPriceProvider(),
                 orderRepository(),
                 tradeRepository()
         );

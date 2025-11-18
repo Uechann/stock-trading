@@ -7,10 +7,7 @@ import stockTrading.domain.model.*;
 import stockTrading.domain.repository.*;
 import stockTrading.dto.OrderRequest;
 import stockTrading.global.util.OrderParser;
-import stockTrading.infra.InMemoryAccountRepository;
-import stockTrading.infra.InMemoryOrderBookRepository;
-import stockTrading.infra.InMemoryOrderRepository;
-import stockTrading.infra.InMemoryTradeRepository;
+import stockTrading.infra.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +19,7 @@ public class OrderServiceTest {
 
     private OrderService orderService;
     private SymbolRegistry symbolRegistry;
+    private SymbolPriceProvider symbolPriceProvider;
     private AccountRepository accountRepository;
     private OrderRepository orderRepository;
     private OrderBookRepository orderBookRepository;
@@ -40,6 +38,7 @@ public class OrderServiceTest {
         orderBookRepository.add(OrderBook.create(new Symbol("APPL")));
         orderBookRepository.add(OrderBook.create(new Symbol("GOOG")));
         tradeRepository = new InMemoryTradeRepository();
+        symbolPriceProvider = new InMemorySymbolPrice();
 
         // 계좌 초기화
         Account accountA = Account.create("3333-11-1234567", 4_000_000);
@@ -48,13 +47,13 @@ public class OrderServiceTest {
         accountRepository.add(accountB);
 
         // 계좌 종목 초기화
-        Position position1 = Position.create(new Symbol("APPL"), 10);
+        Position position1 = Position.create(new Symbol("APPL"), 10000, 10);
         Positions positions1 = new Positions();
         positions1.add(position1);
         accountA.initializeSymbolQuantities(positions1);
 
         Positions positions2 = new Positions();
-        Position position2 = Position.create(new Symbol("APPL"), 10);
+        Position position2 = Position.create(new Symbol("APPL"), 10000, 10);
         positions2.add(position2);
         accountB.initializeSymbolQuantities(positions2);
 
@@ -66,7 +65,7 @@ public class OrderServiceTest {
                 orderRepository,
                 orderValidator,
                 new TradeService(orderRepository, orderBookRepository, tradeRepository),
-                new SettlementService(accountRepository),
+                new SettlementService(accountRepository, symbolPriceProvider),
                 new OrderParser()
         );
     }
