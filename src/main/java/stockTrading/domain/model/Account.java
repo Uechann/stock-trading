@@ -36,16 +36,19 @@ public class Account {
         return positions.getQuantity(symbol);
     }
 
-    // Trade 객체를 받아서 정산 적용
+    // Trade 객체를 받아서 정산 적용 -> 테스트 코드 작성하자 !!!!!!!!!!!!!!!!!!!!
     public void applyTrade(Trade trade) {
+        // 매수자는 : 총 매입가 + (체결 가격 * 수량)
+        // 가격 조정 position(종목 수량과 총 매입가 수정)
         if (trade.getBuyerAccountId().equals(id)) {
             funds -= trade.getPrice() * trade.getQuantity();
-            positions.incrementQuantity(trade.getSymbol(), trade.getQuantity());
+            positions.applyBuy(trade);
         }
 
+        // 매도자는 : 기존 총 매입가 * 남은 수량(기존 수량 - 매도 수량) / 기존 수량
         if (trade.getSellerAccountId().equals(id)) {
             funds += trade.getPrice() * trade.getQuantity();
-            positions.decrementQuantity(trade.getSymbol(), trade.getQuantity());
+            positions.applySell(trade);
         }
     }
 

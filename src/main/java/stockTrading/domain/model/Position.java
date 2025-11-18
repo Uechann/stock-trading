@@ -18,13 +18,16 @@ public class Position {
         return new Position(symbol, quantity, price * quantity);
     }
 
-    public int getQuantity() {
-        return quantity;
+    // TODO: 테스트 코드 작성
+    public void applyBuy(Trade trade) {
+        quantity += trade.getQuantity();
+        totalPrice += trade.getPrice() * trade.getQuantity();
     }
 
-    public static Position create(Symbol symbol, int quantity) {
-        validateAccountSymbolQuantity(quantity);
-        return new Position(symbol, quantity);
+    public void applySell(Trade trade) {
+        quantity -= trade.getQuantity();
+        // 기존 총 매입가 * 남은 수량 / 기존 수량
+        totalPrice = (int) ((double) totalPrice * (double) (quantity - trade.getQuantity()) / quantity);
     }
 
     public void increaseQuantity(int quantity) {
@@ -33,6 +36,14 @@ public class Position {
 
     public void decreaseQuantity(int quantity) {
         this.quantity -= quantity;
+    }
+
+    public Symbol getSymbol() {
+        return symbol;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     // =============== private metohd =====================

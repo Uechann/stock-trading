@@ -22,22 +22,19 @@ public class Positions {
         values.put(position.getSymbol(), position);
     }
 
+    public void applyBuy(Trade trade) {
+        values.get(trade.getSymbol()).applyBuy(trade);
+    }
+
+    public void applySell(Trade trade) {
+        values.get(trade.getSymbol()).applySell(trade);
+    }
+
     public int getQuantity(Symbol symbol) {
         if (!values.containsKey(symbol)) {
             return 0;
         }
 
         return values.get(symbol).getQuantity();
-    }
-
-    // 종목 보유량 증가
-    public void incrementQuantity(Symbol symbol, int quantity) {
-        values.get(symbol).increaseQuantity(quantity);
-    }
-
-    // 종목 보유량 감소
-
-    public void decrementQuantity(Symbol symbol, int quantity) {
-        values.get(symbol).decreaseQuantity(quantity);
     }
 }

@@ -1,19 +1,26 @@
 package stockTrading.domain.service;
 
 import stockTrading.domain.model.Account;
+import stockTrading.domain.model.Symbol;
+import stockTrading.domain.model.SymbolPriceProvider;
 import stockTrading.domain.model.Trade;
 import stockTrading.domain.repository.AccountRepository;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static stockTrading.global.Exception.ErrorMessage.*;
 
 public class SettlementService {
 
     private final AccountRepository accountRepository;
+    private final SymbolPriceProvider symbolPriceProvider;
 
-    public SettlementService(AccountRepository accountRepository) {
+    public SettlementService(AccountRepository accountRepository, SymbolPriceProvider symbolPriceProvider) {
         this.accountRepository = accountRepository;
+        this.symbolPriceProvider = symbolPriceProvider;
     }
 
     public void settle(List<Trade> trades) {
@@ -27,6 +34,21 @@ public class SettlementService {
 
             buyer.applyTrade(trade);
             seller.applyTrade(trade);
+
+            // 종목 최종 체결가 업데이트
+            Map<Symbol, List<Trade>> collect = trades.stream()
+                    .collect(Collectors.groupingBy(Trade::getSymbol));
+
+            collect.forEach((symbol, tradeList) -> {
+                if (!tradeList.isEmpty()) {
+                    int lastPrice = tradeList.stream()
+                            .max(Comparator.comparing(Trade::getCreatedAt))
+                            .map(Trade::getPrice)
+                            .get();
+
+                    symbolPriceProvider.save(symbol, lastPrice);
+                }
+            });
         }
     }
 

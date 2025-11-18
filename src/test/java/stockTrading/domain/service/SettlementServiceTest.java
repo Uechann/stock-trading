@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import stockTrading.domain.model.*;
 import stockTrading.domain.repository.AccountRepository;
 import stockTrading.infra.InMemoryAccountRepository;
+import stockTrading.infra.InMemorySymbolPrice;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +17,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 public class SettlementServiceTest {
 
     private final AccountRepository accountRepository = new InMemoryAccountRepository();
-    private final SettlementService settlementService = new SettlementService(accountRepository);
+    private final SymbolPriceProvider symbolPriceProvider = new InMemorySymbolPrice();
+    private final SettlementService settlementService = new SettlementService(accountRepository, symbolPriceProvider);
 
     @BeforeEach
     void setUp() {
@@ -30,14 +32,14 @@ public class SettlementServiceTest {
         Symbol GOOG = new Symbol("GOOG");
 
         Positions positionsA = new Positions();
-        Position positionA1 = Position.create(APPL, 10);
-        Position positionA2 = Position.create(GOOG, 10);
+        Position positionA1 = Position.create(APPL, 10000, 10);
+        Position positionA2 = Position.create(GOOG, 10000, 10);
         positionsA.add(positionA1);
         positionsA.add(positionA2);
 
         Positions positionsB = new Positions();
-        Position positionB1 = Position.create(APPL, 10);
-        Position positionB2 = Position.create(GOOG, 10);
+        Position positionB1 = Position.create(APPL, 10000, 10);
+        Position positionB2 = Position.create(GOOG, 10000, 10);
         positionsB.add(positionB1);
         positionsB.add(positionB2);
 

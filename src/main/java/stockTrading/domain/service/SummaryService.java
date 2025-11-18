@@ -1,9 +1,6 @@
 package stockTrading.domain.service;
 
-import stockTrading.domain.model.Account;
-import stockTrading.domain.model.Order;
-import stockTrading.domain.model.Symbol;
-import stockTrading.domain.model.Trade;
+import stockTrading.domain.model.*;
 import stockTrading.domain.repository.AccountRepository;
 import stockTrading.domain.repository.OrderRepository;
 import stockTrading.domain.repository.SymbolRegistry;
@@ -20,13 +17,18 @@ public class SummaryService {
 
     private final AccountRepository accountRepository;
     private final SymbolRegistry symbolRegistry;
+    private final SymbolPriceProvider symbolPriceProvider;
     private final OrderRepository orderRepository;
     private final TradeRepository tradeRepository;
 
-    public SummaryService(AccountRepository accountRepository, SymbolRegistry symbolRegistry,
-                          OrderRepository orderRepository, TradeRepository tradeRepository) {
+    public SummaryService(AccountRepository accountRepository,
+                          SymbolRegistry symbolRegistry,
+                          SymbolPriceProvider symbolPriceProvider,
+                          OrderRepository orderRepository,
+                          TradeRepository tradeRepository) {
         this.accountRepository = accountRepository;
         this.symbolRegistry = symbolRegistry;
+        this.symbolPriceProvider = symbolPriceProvider;
         this.orderRepository = orderRepository;
         this.tradeRepository = tradeRepository;
     }

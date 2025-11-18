@@ -11,6 +11,7 @@ import stockTrading.domain.repository.TradeRepository;
 import stockTrading.dto.*;
 import stockTrading.infra.InMemoryAccountRepository;
 import stockTrading.infra.InMemoryOrderRepository;
+import stockTrading.infra.InMemorySymbolPrice;
 import stockTrading.infra.InMemoryTradeRepository;
 
 import java.util.Arrays;
@@ -22,6 +23,7 @@ public class SummaryServiceTest {
 
     private AccountRepository accountRepository;
     private SymbolRegistry symbolRegistry;
+    private SymbolPriceProvider symbolPriceProvider;
     private OrderRepository orderRepository;
     private TradeRepository tradeRepository;
     private SummaryService summaryService;
@@ -34,6 +36,7 @@ public class SummaryServiceTest {
         accountRepository = new InMemoryAccountRepository();
         orderRepository = new InMemoryOrderRepository();
         tradeRepository = new InMemoryTradeRepository();
+        symbolPriceProvider = new InMemorySymbolPrice();
 
         APPL = new Symbol("APPL");
         GOOG = new Symbol("GOOG");
@@ -42,6 +45,7 @@ public class SummaryServiceTest {
         summaryService = new SummaryService(
                 accountRepository,
                 symbolRegistry,
+                symbolPriceProvider,
                 orderRepository,
                 tradeRepository
         );
