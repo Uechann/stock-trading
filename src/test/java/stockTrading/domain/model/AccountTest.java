@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Map;
-
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -55,13 +53,13 @@ public class AccountTest {
         Symbol google = new Symbol("GOOG");
 
         // when
-        AccountSymbol accountSymbol1 = AccountSymbol.create(apple, 50);
-        AccountSymbol accountSymbol2 = AccountSymbol.create(google, 30);
-        AccountSymbols accountSymbols = new AccountSymbols();
-        accountSymbols.add(accountSymbol1);
-        accountSymbols.add(accountSymbol2);
+        Position position1 = Position.create(apple, 50);
+        Position position2 = Position.create(google, 30);
+        Positions positions = new Positions();
+        positions.add(position1);
+        positions.add(position2);
 
-        account.initializeSymbolQuantities(accountSymbols);
+        account.initializeSymbolQuantities(positions);
 
         // then
         assertThat(account.getQuantity(apple)).isEqualTo(50);

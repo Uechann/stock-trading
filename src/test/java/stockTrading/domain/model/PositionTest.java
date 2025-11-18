@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class AccountSymbolTest {
+public class PositionTest {
 
     // given
     Symbol symbol = new Symbol("AAPL");
@@ -18,11 +18,11 @@ public class AccountSymbolTest {
     void AccountSymbolInputSuccessTest() {
 
         // when
-        AccountSymbol accountSymbol = AccountSymbol.create(symbol, 5);
+        Position position = Position.create(symbol, 5);
 
         // then
-        assertThat(accountSymbol.getSymbol()).isEqualTo(symbol);
-        assertThat(accountSymbol.getQuantity()).isEqualTo(5);
+        assertThat(position.getSymbol()).isEqualTo(symbol);
+        assertThat(position.getQuantity()).isEqualTo(5);
     }
 
     @ParameterizedTest
@@ -31,7 +31,7 @@ public class AccountSymbolTest {
     void AccountSymbolInputFailTest(int quantity) {
 
         assertThatThrownBy(() ->
-                AccountSymbol.create(symbol, quantity)
+                Position.create(symbol, quantity)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 }

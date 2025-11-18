@@ -24,19 +24,19 @@ public class OrderValidatorTest {
         accountRepository.add(accountA);
         accountRepository.add(accountB);
 
-        AccountSymbols accountSymbolsA = new AccountSymbols();
-        AccountSymbol accountSymbolA1 = AccountSymbol.create(new Symbol("APPL"), 100);
-        AccountSymbol accountSymbolA2 = AccountSymbol.create(new Symbol("GOOG"), 100);
-        accountSymbolsA.add(accountSymbolA1);
-        accountSymbolsA.add(accountSymbolA2);
-        accountA.initializeSymbolQuantities(accountSymbolsA);
+        Positions positionsA = new Positions();
+        Position positionA1 = Position.create(new Symbol("APPL"), 100);
+        Position positionA2 = Position.create(new Symbol("GOOG"), 100);
+        positionsA.add(positionA1);
+        positionsA.add(positionA2);
+        accountA.initializeSymbolQuantities(positionsA);
 
-        AccountSymbols accountSymbolsB = new AccountSymbols();
-        AccountSymbol accountSymbol1B1 = AccountSymbol.create(new Symbol("APPL"), 100);
-        AccountSymbol accountSymbol1B2 = AccountSymbol.create(new Symbol("GOOG"), 100);
-        accountSymbolsB.add(accountSymbol1B1);
-        accountSymbolsB.add(accountSymbol1B2);
-        accountB.initializeSymbolQuantities(accountSymbolsB);
+        Positions positionsB = new Positions();
+        Position position1B1 = Position.create(new Symbol("APPL"), 100);
+        Position position1B2 = Position.create(new Symbol("GOOG"), 100);
+        positionsB.add(position1B1);
+        positionsB.add(position1B2);
+        accountB.initializeSymbolQuantities(positionsB);
 
         orderValidator = new OrderValidator();
     }

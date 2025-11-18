@@ -29,20 +29,20 @@ public class SettlementServiceTest {
         Symbol APPL = new Symbol("APPL");
         Symbol GOOG = new Symbol("GOOG");
 
-        AccountSymbols accountSymbolsA = new AccountSymbols();
-        AccountSymbol accountSymbolA1 = AccountSymbol.create(APPL, 10);
-        AccountSymbol accountSymbolA2 = AccountSymbol.create(GOOG, 10);
-        accountSymbolsA.add(accountSymbolA1);
-        accountSymbolsA.add(accountSymbolA2);
+        Positions positionsA = new Positions();
+        Position positionA1 = Position.create(APPL, 10);
+        Position positionA2 = Position.create(GOOG, 10);
+        positionsA.add(positionA1);
+        positionsA.add(positionA2);
 
-        AccountSymbols accountSymbolsB = new AccountSymbols();
-        AccountSymbol accountSymbolB1 = AccountSymbol.create(APPL, 10);
-        AccountSymbol accountSymbolB2 = AccountSymbol.create(GOOG, 10);
-        accountSymbolsB.add(accountSymbolB1);
-        accountSymbolsB.add(accountSymbolB2);
+        Positions positionsB = new Positions();
+        Position positionB1 = Position.create(APPL, 10);
+        Position positionB2 = Position.create(GOOG, 10);
+        positionsB.add(positionB1);
+        positionsB.add(positionB2);
 
-        account1.initializeSymbolQuantities(accountSymbolsA);
-        account2.initializeSymbolQuantities(accountSymbolsB);
+        account1.initializeSymbolQuantities(positionsA);
+        account2.initializeSymbolQuantities(positionsB);
     }
 
     // 매수자 매도자 현금 잔액과 종목 보유량이 적절하게 정산 되었는지 테스트

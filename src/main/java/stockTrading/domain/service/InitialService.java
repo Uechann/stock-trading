@@ -50,7 +50,7 @@ public class InitialService {
 
     public void initializeSymbolQuantity(Account account, String accountSymbolInput) {
         // 종목 보유량 초기화
-        AccountSymbols accountSymbols = new AccountSymbols();
+        Positions positions = new Positions();
         List<String> symbolAndQuantitys = symbolParser.parse(accountSymbolInput);
 
         for (String symbolAndQuantity : symbolAndQuantitys) {
@@ -59,8 +59,8 @@ public class InitialService {
             String quantity = symbolQuantity.get(1);
 
             validateSymbolExist(symbolQuantity.getFirst());
-            accountSymbols.add(AccountSymbol.create(new Symbol(symbol), Integer.parseInt(quantity)));
-            account.initializeSymbolQuantities(accountSymbols);
+            positions.add(Position.create(new Symbol(symbol), Integer.parseInt(quantity)));
+            account.initializeSymbolQuantities(positions);
         }
     }
 

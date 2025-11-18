@@ -78,20 +78,20 @@ public class SummaryServiceTest {
         Account accountB = Account.create("3333-22-1234567", 1_000_000);
         Account accountC = Account.create("3333-33-1234567", 1_000_000);
 
-        AccountSymbol accountSymbolA1 = AccountSymbol.create(APPL, 100);
-        AccountSymbol accountSymbolA2 = AccountSymbol.create(GOOG, 100);
-        AccountSymbols accountSymbolsA = AccountSymbols.create(List.of(accountSymbolA1, accountSymbolA2));
-        accountA.initializeSymbolQuantities(accountSymbolsA);
+        Position positionA1 = Position.create(APPL, 100);
+        Position positionA2 = Position.create(GOOG, 100);
+        Positions positionsA = Positions.create(List.of(positionA1, positionA2));
+        accountA.initializeSymbolQuantities(positionsA);
 
-        AccountSymbol accountSymbolB1 = AccountSymbol.create(APPL, 100);
-        AccountSymbol accountSymbolB2 = AccountSymbol.create(GOOG, 100);
-        AccountSymbols accountSymbolsB = AccountSymbols.create(List.of(accountSymbolB1, accountSymbolB2));
-        accountB.initializeSymbolQuantities(accountSymbolsB);
+        Position positionB1 = Position.create(APPL, 100);
+        Position positionB2 = Position.create(GOOG, 100);
+        Positions positionsB = Positions.create(List.of(positionB1, positionB2));
+        accountB.initializeSymbolQuantities(positionsB);
 
-        AccountSymbol accountSymbolC1 = AccountSymbol.create(APPL, 100);
-        AccountSymbol accountSymbolC2 = AccountSymbol.create(GOOG, 100);
-        AccountSymbols accountSymbolsC = AccountSymbols.create(List.of(accountSymbolC1, accountSymbolC2));
-        accountC.initializeSymbolQuantities(accountSymbolsC);
+        Position positionC1 = Position.create(APPL, 100);
+        Position positionC2 = Position.create(GOOG, 100);
+        Positions positionsC = Positions.create(List.of(positionC1, positionC2));
+        accountC.initializeSymbolQuantities(positionsC);
 
         accountRepository.add(accountA);
         accountRepository.add(accountB);
@@ -127,20 +127,20 @@ public class SummaryServiceTest {
         Account accountB = Account.create("3333-22-1234567", 1_000_000);
         Account accountC = Account.create("3333-33-1234567", 1_000_000);
 
-        AccountSymbol accountSymbolA1 = AccountSymbol.create(APPL, 100);
-        AccountSymbol accountSymbolA2 = AccountSymbol.create(GOOG, 100);
-        AccountSymbols accountSymbolsA = AccountSymbols.create(List.of(accountSymbolA1, accountSymbolA2));
-        accountA.initializeSymbolQuantities(accountSymbolsA);
+        Position positionA1 = Position.create(APPL, 100);
+        Position positionA2 = Position.create(GOOG, 100);
+        Positions positionsA = Positions.create(List.of(positionA1, positionA2));
+        accountA.initializeSymbolQuantities(positionsA);
 
-        AccountSymbol accountSymbolB1 = AccountSymbol.create(APPL, 100);
-        AccountSymbol accountSymbolB2 = AccountSymbol.create(GOOG, 100);
-        AccountSymbols accountSymbolsB = AccountSymbols.create(List.of(accountSymbolB1, accountSymbolB2));
-        accountB.initializeSymbolQuantities(accountSymbolsB);
+        Position positionB1 = Position.create(APPL, 100);
+        Position positionB2 = Position.create(GOOG, 100);
+        Positions positionsB = Positions.create(List.of(positionB1, positionB2));
+        accountB.initializeSymbolQuantities(positionsB);
 
-        AccountSymbol accountSymbolC1 = AccountSymbol.create(APPL, 100);
-        AccountSymbol accountSymbolC2 = AccountSymbol.create(GOOG, 100);
-        AccountSymbols accountSymbolsC = AccountSymbols.create(List.of(accountSymbolC1, accountSymbolC2));
-        accountC.initializeSymbolQuantities(accountSymbolsC);
+        Position positionC1 = Position.create(APPL, 100);
+        Position positionC2 = Position.create(GOOG, 100);
+        Positions positionsC = Positions.create(List.of(positionC1, positionC2));
+        accountC.initializeSymbolQuantities(positionsC);
 
         accountRepository.add(accountA);
         accountRepository.add(accountB);

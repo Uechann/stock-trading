@@ -8,7 +8,7 @@ public class Account {
 
     private final String id;
     private int funds;
-    private AccountSymbols accountSymbols;
+    private Positions positions;
 
     private Account(String id, int funds) {
         this.id = id;
@@ -28,24 +28,24 @@ public class Account {
         return funds;
     }
 
-    public void initializeSymbolQuantities(AccountSymbols accountSymbols) {
-        this.accountSymbols = accountSymbols;
+    public void initializeSymbolQuantities(Positions positions) {
+        this.positions = positions;
     }
 
     public int getQuantity(Symbol symbol) {
-        return accountSymbols.getQuantity(symbol);
+        return positions.getQuantity(symbol);
     }
 
     // Trade 객체를 받아서 정산 적용
     public void applyTrade(Trade trade) {
         if (trade.getBuyerAccountId().equals(id)) {
             funds -= trade.getPrice() * trade.getQuantity();
-            accountSymbols.incrementQuantity(trade.getSymbol(), trade.getQuantity());
+            positions.incrementQuantity(trade.getSymbol(), trade.getQuantity());
         }
 
         if (trade.getSellerAccountId().equals(id)) {
             funds += trade.getPrice() * trade.getQuantity();
-            accountSymbols.decrementQuantity(trade.getSymbol(), trade.getQuantity());
+            positions.decrementQuantity(trade.getSymbol(), trade.getQuantity());
         }
     }
 

@@ -47,7 +47,7 @@ public class SummaryService {
     }
 
     public List<AccountSummary> summarizeAccounts() {
-
+        return null;
     }
 
     public List<SymbolSummary> summarizeSymbols() {

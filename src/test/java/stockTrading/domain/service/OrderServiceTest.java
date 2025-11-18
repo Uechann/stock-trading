@@ -48,15 +48,15 @@ public class OrderServiceTest {
         accountRepository.add(accountB);
 
         // 계좌 종목 초기화
-        AccountSymbol accountSymbol1 = AccountSymbol.create(new Symbol("APPL"), 10);
-        AccountSymbols accountSymbols1 = new AccountSymbols();
-        accountSymbols1.add(accountSymbol1);
-        accountA.initializeSymbolQuantities(accountSymbols1);
+        Position position1 = Position.create(new Symbol("APPL"), 10);
+        Positions positions1 = new Positions();
+        positions1.add(position1);
+        accountA.initializeSymbolQuantities(positions1);
 
-        AccountSymbols accountSymbols2 = new AccountSymbols();
-        AccountSymbol accountSymbol2 = AccountSymbol.create(new Symbol("APPL"), 10);
-        accountSymbols2.add(accountSymbol2);
-        accountB.initializeSymbolQuantities(accountSymbols2);
+        Positions positions2 = new Positions();
+        Position position2 = Position.create(new Symbol("APPL"), 10);
+        positions2.add(position2);
+        accountB.initializeSymbolQuantities(positions2);
 
         OrderValidator orderValidator = new OrderValidator();
 

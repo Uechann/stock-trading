@@ -4,22 +4,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AccountSymbols {
-    private final Map<Symbol, AccountSymbol> values = new HashMap<>();
+public class Positions {
+    private final Map<Symbol, Position> values = new HashMap<>();
 
-    public AccountSymbols() {
+    public Positions() {
     }
 
-    private AccountSymbols(List<AccountSymbol> accountSymbols) {
-        accountSymbols.forEach(symbol -> values.put(symbol.getSymbol(), symbol));
+    private Positions(List<Position> positions) {
+        positions.forEach(symbol -> values.put(symbol.getSymbol(), symbol));
     }
 
-    public static AccountSymbols create(List<AccountSymbol> accountSymbols) {
-        return new AccountSymbols(accountSymbols);
+    public static Positions create(List<Position> positions) {
+        return new Positions(positions);
     }
 
-    public void add(AccountSymbol accountSymbol) {
-        values.put(accountSymbol.getSymbol(), accountSymbol);
+    public void add(Position position) {
+        values.put(position.getSymbol(), position);
     }
 
     public int getQuantity(Symbol symbol) {
